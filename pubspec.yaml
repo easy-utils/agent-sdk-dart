@@ -1,0 +1,13 @@
+name: agent_client_sdk
+description: "Agent typed client SDK for Dart/Flutter over easy-rpc (agent.v1.AgentService)."
+version: 0.1.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  easy_rpc:
+    path: /home/user/easy-utils/easy-rpc-dart
+  protobuf: ^6.1.0
+  fixnum: ^1.1.1
