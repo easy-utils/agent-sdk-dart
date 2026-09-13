@@ -804,84 +804,13 @@ class Preset extends $pb.GeneratedMessage {
   void clearIsSystem() => $_clearField(6);
 }
 
-class Provider_HeadersEntry extends $pb.GeneratedMessage {
-  factory Provider_HeadersEntry({
-    $core.String? key,
-    $core.String? value,
-  }) {
-    final result = Provider_HeadersEntry._();
-    if (key != null) result.key = key;
-    if (value != null) result.value = value;
-    return result;
-  }
-
-  Provider_HeadersEntry._();
-
-  factory Provider_HeadersEntry.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      Provider_HeadersEntry()..mergeFromBuffer(data, registry);
-  factory Provider_HeadersEntry.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      Provider_HeadersEntry()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Provider.HeadersEntry',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: Provider_HeadersEntry.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..aOS(2, _omitFieldNames ? '' : 'value')
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Provider_HeadersEntry clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Provider_HeadersEntry copyWith(
-          void Function(Provider_HeadersEntry) updates) =>
-      super.copyWith((message) => updates(message as Provider_HeadersEntry))
-          as Provider_HeadersEntry;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use Provider_HeadersEntry() / Provider_HeadersEntry.new instead')
-  static Provider_HeadersEntry create() => Provider_HeadersEntry._();
-  static $pb.GeneratedMessage $_createMessage() => Provider_HeadersEntry._();
-  @$core.override
-  Provider_HeadersEntry createEmptyInstance() => Provider_HeadersEntry._();
-  @$core.pragma('dart2js:noInline')
-  static Provider_HeadersEntry getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Provider_HeadersEntry>(
-          Provider_HeadersEntry.$_createMessage);
-  static Provider_HeadersEntry? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set key($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearKey() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get value => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set value($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearValue() => $_clearField(2);
-}
-
 class Provider extends $pb.GeneratedMessage {
   factory Provider({
     $core.String? providerId,
     $core.String? apiType,
     $core.String? baseUrl,
     $core.String? apiKey,
-    $core.Iterable<Provider_HeadersEntry>? headers,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? headers,
     $core.Iterable<ProviderModel>? models,
     $core.String? updatedAt,
   }) {
@@ -890,7 +819,7 @@ class Provider extends $pb.GeneratedMessage {
     if (apiType != null) result.apiType = apiType;
     if (baseUrl != null) result.baseUrl = baseUrl;
     if (apiKey != null) result.apiKey = apiKey;
-    if (headers != null) result.headers.addAll(headers);
+    if (headers != null) result.headers.addEntries(headers);
     if (models != null) result.models.addAll(models);
     if (updatedAt != null) result.updatedAt = updatedAt;
     return result;
@@ -913,8 +842,11 @@ class Provider extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'apiType')
     ..aOS(3, _omitFieldNames ? '' : 'baseUrl')
     ..aOS(4, _omitFieldNames ? '' : 'apiKey')
-    ..pPM<Provider_HeadersEntry>(5, _omitFieldNames ? '' : 'headers',
-        subBuilder: Provider_HeadersEntry.$_createMessage)
+    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers',
+        entryClassName: 'Provider.HeadersEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OS,
+        packageName: const $pb.PackageName('agent.v1'))
     ..pPM<ProviderModel>(6, _omitFieldNames ? '' : 'models',
         subBuilder: ProviderModel.$_createMessage)
     ..aOS(7, _omitFieldNames ? '' : 'updatedAt')
@@ -977,7 +909,7 @@ class Provider extends $pb.GeneratedMessage {
   void clearApiKey() => $_clearField(4);
 
   @$pb.TagNumber(5)
-  $pb.PbList<Provider_HeadersEntry> get headers => $_getList(4);
+  $pb.PbMap<$core.String, $core.String> get headers => $_getMap(4);
 
   @$pb.TagNumber(6)
   $pb.PbList<ProviderModel> get models => $_getList(5);
@@ -1308,86 +1240,12 @@ class ToolConfigField extends $pb.GeneratedMessage {
   void clearScope() => $_clearField(8);
 }
 
-class ToolConfig_ValuesEntry extends $pb.GeneratedMessage {
-  factory ToolConfig_ValuesEntry({
-    $core.String? key,
-    $0.Value? value,
-  }) {
-    final result = ToolConfig_ValuesEntry._();
-    if (key != null) result.key = key;
-    if (value != null) result.value = value;
-    return result;
-  }
-
-  ToolConfig_ValuesEntry._();
-
-  factory ToolConfig_ValuesEntry.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      ToolConfig_ValuesEntry()..mergeFromBuffer(data, registry);
-  factory ToolConfig_ValuesEntry.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      ToolConfig_ValuesEntry()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ToolConfig.ValuesEntry',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: ToolConfig_ValuesEntry.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..aOM<$0.Value>(2, _omitFieldNames ? '' : 'value',
-        subBuilder: $0.Value.$_createMessage)
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ToolConfig_ValuesEntry clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ToolConfig_ValuesEntry copyWith(
-          void Function(ToolConfig_ValuesEntry) updates) =>
-      super.copyWith((message) => updates(message as ToolConfig_ValuesEntry))
-          as ToolConfig_ValuesEntry;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use ToolConfig_ValuesEntry() / ToolConfig_ValuesEntry.new instead')
-  static ToolConfig_ValuesEntry create() => ToolConfig_ValuesEntry._();
-  static $pb.GeneratedMessage $_createMessage() => ToolConfig_ValuesEntry._();
-  @$core.override
-  ToolConfig_ValuesEntry createEmptyInstance() => ToolConfig_ValuesEntry._();
-  @$core.pragma('dart2js:noInline')
-  static ToolConfig_ValuesEntry getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ToolConfig_ValuesEntry>(
-          ToolConfig_ValuesEntry.$_createMessage);
-  static ToolConfig_ValuesEntry? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set key($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearKey() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $0.Value get value => $_getN(1);
-  @$pb.TagNumber(2)
-  set value($0.Value value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearValue() => $_clearField(2);
-  @$pb.TagNumber(2)
-  $0.Value ensureValue() => $_ensure(1);
-}
-
 class ToolConfig extends $pb.GeneratedMessage {
   factory ToolConfig({
-    $core.Iterable<ToolConfig_ValuesEntry>? values,
+    $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? values,
   }) {
     final result = ToolConfig._();
-    if (values != null) result.values.addAll(values);
+    if (values != null) result.values.addEntries(values);
     return result;
   }
 
@@ -1404,8 +1262,13 @@ class ToolConfig extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ToolConfig',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
       createEmptyInstance: ToolConfig.$_createMessage)
-    ..pPM<ToolConfig_ValuesEntry>(1, _omitFieldNames ? '' : 'values',
-        subBuilder: ToolConfig_ValuesEntry.$_createMessage)
+    ..m<$core.String, $0.Value>(1, _omitFieldNames ? '' : 'values',
+        entryClassName: 'ToolConfig.ValuesEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: $0.Value.$_createMessage,
+        valueDefaultOrMaker: $0.Value.getDefault,
+        packageName: const $pb.PackageName('agent.v1'))
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1429,92 +1292,18 @@ class ToolConfig extends $pb.GeneratedMessage {
   static ToolConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<ToolConfig_ValuesEntry> get values => $_getList(0);
-}
-
-class PromptResponse_ParamsEntry extends $pb.GeneratedMessage {
-  factory PromptResponse_ParamsEntry({
-    $core.String? key,
-    $core.String? value,
-  }) {
-    final result = PromptResponse_ParamsEntry._();
-    if (key != null) result.key = key;
-    if (value != null) result.value = value;
-    return result;
-  }
-
-  PromptResponse_ParamsEntry._();
-
-  factory PromptResponse_ParamsEntry.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      PromptResponse_ParamsEntry()..mergeFromBuffer(data, registry);
-  factory PromptResponse_ParamsEntry.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      PromptResponse_ParamsEntry()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'PromptResponse.ParamsEntry',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: PromptResponse_ParamsEntry.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..aOS(2, _omitFieldNames ? '' : 'value')
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PromptResponse_ParamsEntry clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PromptResponse_ParamsEntry copyWith(
-          void Function(PromptResponse_ParamsEntry) updates) =>
-      super.copyWith(
-              (message) => updates(message as PromptResponse_ParamsEntry))
-          as PromptResponse_ParamsEntry;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use PromptResponse_ParamsEntry() / PromptResponse_ParamsEntry.new instead')
-  static PromptResponse_ParamsEntry create() => PromptResponse_ParamsEntry._();
-  static $pb.GeneratedMessage $_createMessage() =>
-      PromptResponse_ParamsEntry._();
-  @$core.override
-  PromptResponse_ParamsEntry createEmptyInstance() =>
-      PromptResponse_ParamsEntry._();
-  @$core.pragma('dart2js:noInline')
-  static PromptResponse_ParamsEntry getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PromptResponse_ParamsEntry>(
-          PromptResponse_ParamsEntry.$_createMessage);
-  static PromptResponse_ParamsEntry? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set key($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearKey() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get value => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set value($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearValue() => $_clearField(2);
+  $pb.PbMap<$core.String, $0.Value> get values => $_getMap(0);
 }
 
 class PromptResponse extends $pb.GeneratedMessage {
   factory PromptResponse({
     $core.String? event,
-    $core.Iterable<PromptResponse_ParamsEntry>? params,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? params,
     $core.String? eid,
   }) {
     final result = PromptResponse._();
     if (event != null) result.event = event;
-    if (params != null) result.params.addAll(params);
+    if (params != null) result.params.addEntries(params);
     if (eid != null) result.eid = eid;
     return result;
   }
@@ -1533,8 +1322,11 @@ class PromptResponse extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
       createEmptyInstance: PromptResponse.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'event')
-    ..pPM<PromptResponse_ParamsEntry>(2, _omitFieldNames ? '' : 'params',
-        subBuilder: PromptResponse_ParamsEntry.$_createMessage)
+    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'params',
+        entryClassName: 'PromptResponse.ParamsEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OS,
+        packageName: const $pb.PackageName('agent.v1'))
     ..aOS(3, _omitFieldNames ? '' : 'eid')
     ..hasRequiredFields = false;
 
@@ -1570,7 +1362,7 @@ class PromptResponse extends $pb.GeneratedMessage {
   void clearEvent() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $pb.PbList<PromptResponse_ParamsEntry> get params => $_getList(1);
+  $pb.PbMap<$core.String, $core.String> get params => $_getMap(1);
 
   @$pb.TagNumber(3)
   $core.String get eid => $_getSZ(2);
@@ -4097,96 +3889,12 @@ class ListProvidersCatalogRequest extends $pb.GeneratedMessage {
   static ListProvidersCatalogRequest? _defaultInstance;
 }
 
-class ListProvidersCatalogResponse_ProvidersEntry extends $pb.GeneratedMessage {
-  factory ListProvidersCatalogResponse_ProvidersEntry({
-    $core.String? key,
-    CatalogProvider? value,
-  }) {
-    final result = ListProvidersCatalogResponse_ProvidersEntry._();
-    if (key != null) result.key = key;
-    if (value != null) result.value = value;
-    return result;
-  }
-
-  ListProvidersCatalogResponse_ProvidersEntry._();
-
-  factory ListProvidersCatalogResponse_ProvidersEntry.fromBuffer(
-          $core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      ListProvidersCatalogResponse_ProvidersEntry()
-        ..mergeFromBuffer(data, registry);
-  factory ListProvidersCatalogResponse_ProvidersEntry.fromJson(
-          $core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      ListProvidersCatalogResponse_ProvidersEntry()
-        ..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ListProvidersCatalogResponse.ProvidersEntry',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance:
-          ListProvidersCatalogResponse_ProvidersEntry.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..aOM<CatalogProvider>(2, _omitFieldNames ? '' : 'value',
-        subBuilder: CatalogProvider.$_createMessage)
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ListProvidersCatalogResponse_ProvidersEntry clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ListProvidersCatalogResponse_ProvidersEntry copyWith(
-          void Function(ListProvidersCatalogResponse_ProvidersEntry) updates) =>
-      super.copyWith((message) =>
-              updates(message as ListProvidersCatalogResponse_ProvidersEntry))
-          as ListProvidersCatalogResponse_ProvidersEntry;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use ListProvidersCatalogResponse_ProvidersEntry() / ListProvidersCatalogResponse_ProvidersEntry.new instead')
-  static ListProvidersCatalogResponse_ProvidersEntry create() =>
-      ListProvidersCatalogResponse_ProvidersEntry._();
-  static $pb.GeneratedMessage $_createMessage() =>
-      ListProvidersCatalogResponse_ProvidersEntry._();
-  @$core.override
-  ListProvidersCatalogResponse_ProvidersEntry createEmptyInstance() =>
-      ListProvidersCatalogResponse_ProvidersEntry._();
-  @$core.pragma('dart2js:noInline')
-  static ListProvidersCatalogResponse_ProvidersEntry getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-              ListProvidersCatalogResponse_ProvidersEntry>(
-          ListProvidersCatalogResponse_ProvidersEntry.$_createMessage);
-  static ListProvidersCatalogResponse_ProvidersEntry? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set key($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearKey() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  CatalogProvider get value => $_getN(1);
-  @$pb.TagNumber(2)
-  set value(CatalogProvider value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearValue() => $_clearField(2);
-  @$pb.TagNumber(2)
-  CatalogProvider ensureValue() => $_ensure(1);
-}
-
 class ListProvidersCatalogResponse extends $pb.GeneratedMessage {
   factory ListProvidersCatalogResponse({
-    $core.Iterable<ListProvidersCatalogResponse_ProvidersEntry>? providers,
+    $core.Iterable<$core.MapEntry<$core.String, CatalogProvider>>? providers,
   }) {
     final result = ListProvidersCatalogResponse._();
-    if (providers != null) result.providers.addAll(providers);
+    if (providers != null) result.providers.addEntries(providers);
     return result;
   }
 
@@ -4203,9 +3911,13 @@ class ListProvidersCatalogResponse extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ListProvidersCatalogResponse',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
       createEmptyInstance: ListProvidersCatalogResponse.$_createMessage)
-    ..pPM<ListProvidersCatalogResponse_ProvidersEntry>(
-        1, _omitFieldNames ? '' : 'providers',
-        subBuilder: ListProvidersCatalogResponse_ProvidersEntry.$_createMessage)
+    ..m<$core.String, CatalogProvider>(1, _omitFieldNames ? '' : 'providers',
+        entryClassName: 'ListProvidersCatalogResponse.ProvidersEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: CatalogProvider.$_createMessage,
+        valueDefaultOrMaker: CatalogProvider.getDefault,
+        packageName: const $pb.PackageName('agent.v1'))
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4237,86 +3949,7 @@ class ListProvidersCatalogResponse extends $pb.GeneratedMessage {
   static ListProvidersCatalogResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $pb.PbList<ListProvidersCatalogResponse_ProvidersEntry> get providers =>
-      $_getList(0);
-}
-
-class CatalogProvider_ModelsEntry extends $pb.GeneratedMessage {
-  factory CatalogProvider_ModelsEntry({
-    $core.String? key,
-    $0.Value? value,
-  }) {
-    final result = CatalogProvider_ModelsEntry._();
-    if (key != null) result.key = key;
-    if (value != null) result.value = value;
-    return result;
-  }
-
-  CatalogProvider_ModelsEntry._();
-
-  factory CatalogProvider_ModelsEntry.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      CatalogProvider_ModelsEntry()..mergeFromBuffer(data, registry);
-  factory CatalogProvider_ModelsEntry.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      CatalogProvider_ModelsEntry()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'CatalogProvider.ModelsEntry',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: CatalogProvider_ModelsEntry.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..aOM<$0.Value>(2, _omitFieldNames ? '' : 'value',
-        subBuilder: $0.Value.$_createMessage)
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CatalogProvider_ModelsEntry clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CatalogProvider_ModelsEntry copyWith(
-          void Function(CatalogProvider_ModelsEntry) updates) =>
-      super.copyWith(
-              (message) => updates(message as CatalogProvider_ModelsEntry))
-          as CatalogProvider_ModelsEntry;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use CatalogProvider_ModelsEntry() / CatalogProvider_ModelsEntry.new instead')
-  static CatalogProvider_ModelsEntry create() =>
-      CatalogProvider_ModelsEntry._();
-  static $pb.GeneratedMessage $_createMessage() =>
-      CatalogProvider_ModelsEntry._();
-  @$core.override
-  CatalogProvider_ModelsEntry createEmptyInstance() =>
-      CatalogProvider_ModelsEntry._();
-  @$core.pragma('dart2js:noInline')
-  static CatalogProvider_ModelsEntry getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CatalogProvider_ModelsEntry>(
-          CatalogProvider_ModelsEntry.$_createMessage);
-  static CatalogProvider_ModelsEntry? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set key($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearKey() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $0.Value get value => $_getN(1);
-  @$pb.TagNumber(2)
-  set value($0.Value value) => $_setField(2, value);
-  @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearValue() => $_clearField(2);
-  @$pb.TagNumber(2)
-  $0.Value ensureValue() => $_ensure(1);
+  $pb.PbMap<$core.String, CatalogProvider> get providers => $_getMap(0);
 }
 
 class CatalogProvider extends $pb.GeneratedMessage {
@@ -4326,7 +3959,7 @@ class CatalogProvider extends $pb.GeneratedMessage {
     $core.String? api,
     $core.String? npm,
     $core.Iterable<$core.String>? env,
-    $core.Iterable<CatalogProvider_ModelsEntry>? models,
+    $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? models,
   }) {
     final result = CatalogProvider._();
     if (id != null) result.id = id;
@@ -4334,7 +3967,7 @@ class CatalogProvider extends $pb.GeneratedMessage {
     if (api != null) result.api = api;
     if (npm != null) result.npm = npm;
     if (env != null) result.env.addAll(env);
-    if (models != null) result.models.addAll(models);
+    if (models != null) result.models.addEntries(models);
     return result;
   }
 
@@ -4356,8 +3989,13 @@ class CatalogProvider extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'api')
     ..aOS(4, _omitFieldNames ? '' : 'npm')
     ..pPS(5, _omitFieldNames ? '' : 'env')
-    ..pPM<CatalogProvider_ModelsEntry>(6, _omitFieldNames ? '' : 'models',
-        subBuilder: CatalogProvider_ModelsEntry.$_createMessage)
+    ..m<$core.String, $0.Value>(6, _omitFieldNames ? '' : 'models',
+        entryClassName: 'CatalogProvider.ModelsEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: $0.Value.$_createMessage,
+        valueDefaultOrMaker: $0.Value.getDefault,
+        packageName: const $pb.PackageName('agent.v1'))
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4422,7 +4060,7 @@ class CatalogProvider extends $pb.GeneratedMessage {
   $pb.PbList<$core.String> get env => $_getList(4);
 
   @$pb.TagNumber(6)
-  $pb.PbList<CatalogProvider_ModelsEntry> get models => $_getList(5);
+  $pb.PbMap<$core.String, $0.Value> get models => $_getMap(5);
 }
 
 class RegisterProviderRequest extends $pb.GeneratedMessage {
@@ -4547,100 +4185,20 @@ class RegisterProviderResponse extends $pb.GeneratedMessage {
   void clearOk() => $_clearField(1);
 }
 
-class DiscoverGatewayModelsRequest_HeadersEntry extends $pb.GeneratedMessage {
-  factory DiscoverGatewayModelsRequest_HeadersEntry({
-    $core.String? key,
-    $core.String? value,
-  }) {
-    final result = DiscoverGatewayModelsRequest_HeadersEntry._();
-    if (key != null) result.key = key;
-    if (value != null) result.value = value;
-    return result;
-  }
-
-  DiscoverGatewayModelsRequest_HeadersEntry._();
-
-  factory DiscoverGatewayModelsRequest_HeadersEntry.fromBuffer(
-          $core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      DiscoverGatewayModelsRequest_HeadersEntry()
-        ..mergeFromBuffer(data, registry);
-  factory DiscoverGatewayModelsRequest_HeadersEntry.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      DiscoverGatewayModelsRequest_HeadersEntry()
-        ..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DiscoverGatewayModelsRequest.HeadersEntry',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance:
-          DiscoverGatewayModelsRequest_HeadersEntry.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'key')
-    ..aOS(2, _omitFieldNames ? '' : 'value')
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DiscoverGatewayModelsRequest_HeadersEntry clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DiscoverGatewayModelsRequest_HeadersEntry copyWith(
-          void Function(DiscoverGatewayModelsRequest_HeadersEntry) updates) =>
-      super.copyWith((message) =>
-              updates(message as DiscoverGatewayModelsRequest_HeadersEntry))
-          as DiscoverGatewayModelsRequest_HeadersEntry;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use DiscoverGatewayModelsRequest_HeadersEntry() / DiscoverGatewayModelsRequest_HeadersEntry.new instead')
-  static DiscoverGatewayModelsRequest_HeadersEntry create() =>
-      DiscoverGatewayModelsRequest_HeadersEntry._();
-  static $pb.GeneratedMessage $_createMessage() =>
-      DiscoverGatewayModelsRequest_HeadersEntry._();
-  @$core.override
-  DiscoverGatewayModelsRequest_HeadersEntry createEmptyInstance() =>
-      DiscoverGatewayModelsRequest_HeadersEntry._();
-  @$core.pragma('dart2js:noInline')
-  static DiscoverGatewayModelsRequest_HeadersEntry getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-              DiscoverGatewayModelsRequest_HeadersEntry>(
-          DiscoverGatewayModelsRequest_HeadersEntry.$_createMessage);
-  static DiscoverGatewayModelsRequest_HeadersEntry? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get key => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set key($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasKey() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearKey() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get value => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set value($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearValue() => $_clearField(2);
-}
-
 class DiscoverGatewayModelsRequest extends $pb.GeneratedMessage {
   factory DiscoverGatewayModelsRequest({
     $core.String? providerId,
     $core.String? apiType,
     $core.String? baseUrl,
     $core.String? apiKey,
-    $core.Iterable<DiscoverGatewayModelsRequest_HeadersEntry>? headers,
+    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? headers,
   }) {
     final result = DiscoverGatewayModelsRequest._();
     if (providerId != null) result.providerId = providerId;
     if (apiType != null) result.apiType = apiType;
     if (baseUrl != null) result.baseUrl = baseUrl;
     if (apiKey != null) result.apiKey = apiKey;
-    if (headers != null) result.headers.addAll(headers);
+    if (headers != null) result.headers.addEntries(headers);
     return result;
   }
 
@@ -4661,9 +4219,11 @@ class DiscoverGatewayModelsRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'apiType')
     ..aOS(3, _omitFieldNames ? '' : 'baseUrl')
     ..aOS(4, _omitFieldNames ? '' : 'apiKey')
-    ..pPM<DiscoverGatewayModelsRequest_HeadersEntry>(
-        5, _omitFieldNames ? '' : 'headers',
-        subBuilder: DiscoverGatewayModelsRequest_HeadersEntry.$_createMessage)
+    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers',
+        entryClassName: 'DiscoverGatewayModelsRequest.HeadersEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OS,
+        packageName: const $pb.PackageName('agent.v1'))
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -4731,8 +4291,7 @@ class DiscoverGatewayModelsRequest extends $pb.GeneratedMessage {
   void clearApiKey() => $_clearField(4);
 
   @$pb.TagNumber(5)
-  $pb.PbList<DiscoverGatewayModelsRequest_HeadersEntry> get headers =>
-      $_getList(4);
+  $pb.PbMap<$core.String, $core.String> get headers => $_getMap(4);
 }
 
 class DiscoverGatewayModelsResponse extends $pb.GeneratedMessage {

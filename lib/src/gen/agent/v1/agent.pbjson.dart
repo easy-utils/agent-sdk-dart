@@ -211,6 +211,7 @@ const Provider_HeadersEntry$json = {
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `Provider`. Decode as a `google.protobuf.DescriptorProto`.
@@ -219,8 +220,8 @@ final $typed_data.Uint8List providerDescriptor = $convert.base64Decode(
     'gCIAEoCVIHYXBpVHlwZRIZCghiYXNlX3VybBgDIAEoCVIHYmFzZVVybBIXCgdhcGlfa2V5GAQg'
     'ASgJUgZhcGlLZXkSOQoHaGVhZGVycxgFIAMoCzIfLmFnZW50LnYxLlByb3ZpZGVyLkhlYWRlcn'
     'NFbnRyeVIHaGVhZGVycxIvCgZtb2RlbHMYBiADKAsyFy5hZ2VudC52MS5Qcm92aWRlck1vZGVs'
-    'UgZtb2RlbHMSHQoKdXBkYXRlZF9hdBgHIAEoCVIJdXBkYXRlZEF0GjYKDEhlYWRlcnNFbnRyeR'
-    'IQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU=');
+    'UgZtb2RlbHMSHQoKdXBkYXRlZF9hdBgHIAEoCVIJdXBkYXRlZEF0GjoKDEhlYWRlcnNFbnRyeR'
+    'IQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
 
 @$core.Deprecated('Use providerModelDescriptor instead')
 const ProviderModel$json = {
@@ -331,13 +332,14 @@ const ToolConfig_ValuesEntry$json = {
       '10': 'value'
     },
   ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `ToolConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List toolConfigDescriptor = $convert.base64Decode(
     'CgpUb29sQ29uZmlnEjgKBnZhbHVlcxgBIAMoCzIgLmFnZW50LnYxLlRvb2xDb25maWcuVmFsdW'
-    'VzRW50cnlSBnZhbHVlcxpNCgtWYWx1ZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIsCgV2YWx1'
-    'ZRgCIAEoCzIWLmdvb2dsZS5wcm90b2J1Zi5WYWx1ZVIFdmFsdWU=');
+    'VzRW50cnlSBnZhbHVlcxpRCgtWYWx1ZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIsCgV2YWx1'
+    'ZRgCIAEoCzIWLmdvb2dsZS5wcm90b2J1Zi5WYWx1ZVIFdmFsdWU6AjgB');
 
 @$core.Deprecated('Use promptResponseDescriptor instead')
 const PromptResponse$json = {
@@ -364,14 +366,15 @@ const PromptResponse_ParamsEntry$json = {
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `PromptResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List promptResponseDescriptor = $convert.base64Decode(
     'Cg5Qcm9tcHRSZXNwb25zZRIUCgVldmVudBgBIAEoCVIFZXZlbnQSPAoGcGFyYW1zGAIgAygLMi'
     'QuYWdlbnQudjEuUHJvbXB0UmVzcG9uc2UuUGFyYW1zRW50cnlSBnBhcmFtcxIQCgNlaWQYAyAB'
-    'KAlSA2VpZBo1CgtQYXJhbXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCV'
-    'IFdmFsdWU=');
+    'KAlSA2VpZBo5CgtQYXJhbXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCV'
+    'IFdmFsdWU6AjgB');
 
 @$core.Deprecated('Use watchSessionRequestDescriptor instead')
 const WatchSessionRequest$json = {
@@ -1013,14 +1016,15 @@ const ListProvidersCatalogResponse_ProvidersEntry$json = {
       '10': 'value'
     },
   ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `ListProvidersCatalogResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listProvidersCatalogResponseDescriptor = $convert.base64Decode(
     'ChxMaXN0UHJvdmlkZXJzQ2F0YWxvZ1Jlc3BvbnNlElMKCXByb3ZpZGVycxgBIAMoCzI1LmFnZW'
     '50LnYxLkxpc3RQcm92aWRlcnNDYXRhbG9nUmVzcG9uc2UuUHJvdmlkZXJzRW50cnlSCXByb3Zp'
-    'ZGVycxpTCg5Qcm92aWRlcnNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIvCgV2YWx1ZRgCIAEoCz'
-    'IZLmFnZW50LnYxLkNhdGFsb2dQcm92aWRlclIFdmFsdWU=');
+    'ZGVycxpXCg5Qcm92aWRlcnNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIvCgV2YWx1ZRgCIAEoCz'
+    'IZLmFnZW50LnYxLkNhdGFsb2dQcm92aWRlclIFdmFsdWU6AjgB');
 
 @$core.Deprecated('Use catalogProviderDescriptor instead')
 const CatalogProvider$json = {
@@ -1057,6 +1061,7 @@ const CatalogProvider_ModelsEntry$json = {
       '10': 'value'
     },
   ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `CatalogProvider`. Decode as a `google.protobuf.DescriptorProto`.
@@ -1064,8 +1069,8 @@ final $typed_data.Uint8List catalogProviderDescriptor = $convert.base64Decode(
     'Cg9DYXRhbG9nUHJvdmlkZXISDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEA'
     'oDYXBpGAMgASgJUgNhcGkSEAoDbnBtGAQgASgJUgNucG0SEAoDZW52GAUgAygJUgNlbnYSPQoG'
     'bW9kZWxzGAYgAygLMiUuYWdlbnQudjEuQ2F0YWxvZ1Byb3ZpZGVyLk1vZGVsc0VudHJ5UgZtb2'
-    'RlbHMaTQoLTW9kZWxzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSLAoFdmFsdWUYAiABKAsyFi5n'
-    'b29nbGUucHJvdG9idWYuVmFsdWVSBXZhbHVl');
+    'RlbHMaUQoLTW9kZWxzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSLAoFdmFsdWUYAiABKAsyFi5n'
+    'b29nbGUucHJvdG9idWYuVmFsdWVSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use registerProviderRequestDescriptor instead')
 const RegisterProviderRequest$json = {
@@ -1127,6 +1132,7 @@ const DiscoverGatewayModelsRequest_HeadersEntry$json = {
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
   ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `DiscoverGatewayModelsRequest`. Decode as a `google.protobuf.DescriptorProto`.
@@ -1135,8 +1141,8 @@ final $typed_data.Uint8List discoverGatewayModelsRequestDescriptor = $convert.ba
     '92aWRlcklkEhkKCGFwaV90eXBlGAIgASgJUgdhcGlUeXBlEhkKCGJhc2VfdXJsGAMgASgJUgdi'
     'YXNlVXJsEhcKB2FwaV9rZXkYBCABKAlSBmFwaUtleRJNCgdoZWFkZXJzGAUgAygLMjMuYWdlbn'
     'QudjEuRGlzY292ZXJHYXRld2F5TW9kZWxzUmVxdWVzdC5IZWFkZXJzRW50cnlSB2hlYWRlcnMa'
-    'NgoMSGVhZGVyc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZQ'
-    '==');
+    'OgoMSGVhZGVyc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZT'
+    'oCOAE=');
 
 @$core.Deprecated('Use discoverGatewayModelsResponseDescriptor instead')
 const DiscoverGatewayModelsResponse$json = {
