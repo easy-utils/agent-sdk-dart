@@ -5,9 +5,8 @@ import 'package:agent_client_sdk/src/gen/agent/v1/agent.pb.dart' as m;
 
 class AgentServiceClient {
   final Transport _t;
-  final Map<String, List<String>> _md;
-  AgentServiceClient(this._t, [Map<String, List<String>>? metadata]) : _md = metadata ?? const {};
-  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body, headers: _md);
+  AgentServiceClient(this._t);
+  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body);
 
   Future<m.HealthResponse> health(m.HealthRequest req) async {
     final res = await _t.send(_req('/agent.v1.AgentService/Health', req.writeToBuffer()));

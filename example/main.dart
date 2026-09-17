@@ -8,8 +8,7 @@ Future<void> main() async {
   // FetchTransport are imported by the caller and plugged straight in).
   final transport = IoTransport(baseUrl: 'http://127.0.0.1:18888');
   final agent = AgentServiceClient(
-    transport,
-    {'authorization': ['Bearer devtoken']},
+    InterceptorTransport([MetadataInterceptor({'authorization': ['Bearer devtoken']})], transport),
   );
   final h = await agent.health(pb.HealthRequest());
   print('health: ok=${h.ok}');

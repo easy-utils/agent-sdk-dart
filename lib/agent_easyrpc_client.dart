@@ -27,8 +27,12 @@ class AgentClient {
   final String token;
   AgentClient({required Transport transport, String this.token = ''})
       : _rpc = rpc.AgentServiceClient(
-          transport,
-          token.isNotEmpty ? {'authorization': ['Bearer $token']} : null,
+          token.isNotEmpty
+              ? InterceptorTransport(
+                  [MetadataInterceptor({'authorization': ['Bearer $token']})],
+                  transport,
+                )
+              : transport,
         );
 
   rpc.AgentServiceClient get client => _rpc;
