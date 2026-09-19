@@ -10,6 +10,6 @@ dependencies:
   easy_rpc:
     git:
       url: https://github.com/easy-utils/easy-rpc-dart.git
-      ref: v3.0.0
+      ref: v3.0.1
   protobuf: ^6.1.0
   fixnum: ^1.1.1
