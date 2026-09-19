@@ -6,243 +6,317 @@ import 'package:agent_client_sdk/src/gen/agent/v1/agent.pb.dart' as m;
 class AgentServiceClient {
   final Transport _t;
   AgentServiceClient(this._t);
-  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body);
+  Request _req(String url, [Uint8List? body]) => Request(url: url, body: body);
+  Headers lastTrailers = const {};
+  RpcStream? lastStream;
 
-  Future<m.HealthResponse> health(m.HealthRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Health', req.writeToBuffer()));
+  Future<m.HealthResponse> health(m.HealthRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Health', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.HealthResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.HealthResponse>(res.body!, () => m.HealthResponse(), kind);
   }
 
-  Future<m.ListSessionsResponse> listSessions(m.ListSessionsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListSessions', req.writeToBuffer()));
+  Future<m.ListSessionsResponse> listSessions(m.ListSessionsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListSessions', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListSessionsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListSessionsResponse>(res.body!, () => m.ListSessionsResponse(), kind);
   }
 
-  Future<m.CreateSessionResponse> createSession(m.CreateSessionRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/CreateSession', req.writeToBuffer()));
+  Future<m.CreateSessionResponse> createSession(m.CreateSessionRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/CreateSession', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.CreateSessionResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.CreateSessionResponse>(res.body!, () => m.CreateSessionResponse(), kind);
   }
 
-  Future<m.GetSessionResponse> getSession(m.GetSessionRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/GetSession', req.writeToBuffer()));
+  Future<m.GetSessionResponse> getSession(m.GetSessionRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetSession', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.GetSessionResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetSessionResponse>(res.body!, () => m.GetSessionResponse(), kind);
   }
 
-  Future<m.DeleteSessionResponse> deleteSession(m.DeleteSessionRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/DeleteSession', req.writeToBuffer()));
+  Future<m.DeleteSessionResponse> deleteSession(m.DeleteSessionRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/DeleteSession', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.DeleteSessionResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.DeleteSessionResponse>(res.body!, () => m.DeleteSessionResponse(), kind);
   }
 
-  Future<m.ListMessagesResponse> listMessages(m.ListMessagesRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListMessages', req.writeToBuffer()));
+  Future<m.ListMessagesResponse> listMessages(m.ListMessagesRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListMessages', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListMessagesResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListMessagesResponse>(res.body!, () => m.ListMessagesResponse(), kind);
   }
 
-  Stream<m.PromptResponse> prompt(m.PromptRequest req) async* {
-    final st = await _t.openStream(_req('/agent.v1.AgentService/Prompt', req.writeToBuffer()));
-    await for (final chunk in st.messages) { yield m.PromptResponse.fromBuffer(chunk); }
+  Stream<m.PromptResponse> prompt(m.PromptRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/agent.v1.AgentService/Prompt', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
+    lastStream = st;
+    await for (final chunk in st.messages) { yield decodeMsg<m.PromptResponse>(chunk, () => m.PromptResponse(), kind); }
   }
 
-  Stream<m.WatchSessionResponse> watchSession(m.WatchSessionRequest req) async* {
-    final st = await _t.openStream(_req('/agent.v1.AgentService/WatchSession', req.writeToBuffer()));
-    await for (final chunk in st.messages) { yield m.WatchSessionResponse.fromBuffer(chunk); }
+  Stream<m.WatchSessionResponse> watchSession(m.WatchSessionRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/agent.v1.AgentService/WatchSession', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
+    lastStream = st;
+    await for (final chunk in st.messages) { yield decodeMsg<m.WatchSessionResponse>(chunk, () => m.WatchSessionResponse(), kind); }
   }
 
-  Stream<m.WatchSessionsResponse> watchSessions(m.WatchSessionsRequest req) async* {
-    final st = await _t.openStream(_req('/agent.v1.AgentService/WatchSessions', req.writeToBuffer()));
-    await for (final chunk in st.messages) { yield m.WatchSessionsResponse.fromBuffer(chunk); }
+  Stream<m.WatchSessionsResponse> watchSessions(m.WatchSessionsRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/agent.v1.AgentService/WatchSessions', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
+    lastStream = st;
+    await for (final chunk in st.messages) { yield decodeMsg<m.WatchSessionsResponse>(chunk, () => m.WatchSessionsResponse(), kind); }
   }
 
-  Future<m.ForkResponse> fork(m.ForkRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Fork', req.writeToBuffer()));
+  Future<m.ForkResponse> fork(m.ForkRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Fork', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ForkResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ForkResponse>(res.body!, () => m.ForkResponse(), kind);
   }
 
-  Future<m.RenameResponse> rename(m.RenameRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Rename', req.writeToBuffer()));
+  Future<m.RenameResponse> rename(m.RenameRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Rename', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.RenameResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.RenameResponse>(res.body!, () => m.RenameResponse(), kind);
   }
 
-  Future<m.SetModelResponse> setModel(m.SetModelRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/SetModel', req.writeToBuffer()));
+  Future<m.SetModelResponse> setModel(m.SetModelRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/SetModel', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.SetModelResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.SetModelResponse>(res.body!, () => m.SetModelResponse(), kind);
   }
 
-  Future<m.UndoResponse> undo(m.UndoRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Undo', req.writeToBuffer()));
+  Future<m.UndoResponse> undo(m.UndoRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Undo', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.UndoResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.UndoResponse>(res.body!, () => m.UndoResponse(), kind);
   }
 
-  Future<m.StateResponse> state(m.StateRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/State', req.writeToBuffer()));
+  Future<m.StateResponse> state(m.StateRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/State', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.StateResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.StateResponse>(res.body!, () => m.StateResponse(), kind);
   }
 
-  Future<m.MailboxResponse> mailbox(m.MailboxRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Mailbox', req.writeToBuffer()));
+  Future<m.MailboxResponse> mailbox(m.MailboxRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Mailbox', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.MailboxResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.MailboxResponse>(res.body!, () => m.MailboxResponse(), kind);
   }
 
-  Future<m.UpdateSettingsResponse> updateSettings(m.UpdateSettingsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/UpdateSettings', req.writeToBuffer()));
+  Future<m.UpdateSettingsResponse> updateSettings(m.UpdateSettingsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/UpdateSettings', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.UpdateSettingsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.UpdateSettingsResponse>(res.body!, () => m.UpdateSettingsResponse(), kind);
   }
 
-  Future<m.InterruptResponse> interrupt(m.InterruptRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Interrupt', req.writeToBuffer()));
+  Future<m.InterruptResponse> interrupt(m.InterruptRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Interrupt', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.InterruptResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.InterruptResponse>(res.body!, () => m.InterruptResponse(), kind);
   }
 
-  Future<m.CompactResponse> compact(m.CompactRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/Compact', req.writeToBuffer()));
+  Future<m.CompactResponse> compact(m.CompactRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/Compact', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.CompactResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.CompactResponse>(res.body!, () => m.CompactResponse(), kind);
   }
 
-  Future<m.ListProvidersResponse> listProviders(m.ListProvidersRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListProviders', req.writeToBuffer()));
+  Future<m.ListProvidersResponse> listProviders(m.ListProvidersRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListProviders', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListProvidersResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListProvidersResponse>(res.body!, () => m.ListProvidersResponse(), kind);
   }
 
-  Future<m.ListProvidersCatalogResponse> listProvidersCatalog(m.ListProvidersCatalogRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListProvidersCatalog', req.writeToBuffer()));
+  Future<m.ListProvidersCatalogResponse> listProvidersCatalog(m.ListProvidersCatalogRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListProvidersCatalog', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListProvidersCatalogResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListProvidersCatalogResponse>(res.body!, () => m.ListProvidersCatalogResponse(), kind);
   }
 
-  Future<m.RegisterProviderResponse> registerProvider(m.RegisterProviderRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/RegisterProvider', req.writeToBuffer()));
+  Future<m.RegisterProviderResponse> registerProvider(m.RegisterProviderRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/RegisterProvider', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.RegisterProviderResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.RegisterProviderResponse>(res.body!, () => m.RegisterProviderResponse(), kind);
   }
 
-  Future<m.DiscoverGatewayModelsResponse> discoverGatewayModels(m.DiscoverGatewayModelsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/DiscoverGatewayModels', req.writeToBuffer()));
+  Future<m.DeleteProviderResponse> deleteProvider(m.DeleteProviderRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/DeleteProvider', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.DiscoverGatewayModelsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.DeleteProviderResponse>(res.body!, () => m.DeleteProviderResponse(), kind);
   }
 
-  Future<m.DeleteProviderResponse> deleteProvider(m.DeleteProviderRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/DeleteProvider', req.writeToBuffer()));
+  Future<m.TestProviderResponse> testProvider(m.TestProviderRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/TestProvider', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.DeleteProviderResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.TestProviderResponse>(res.body!, () => m.TestProviderResponse(), kind);
   }
 
-  Future<m.TestProviderResponse> testProvider(m.TestProviderRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/TestProvider', req.writeToBuffer()));
+  Future<m.ListModelsResponse> listModels(m.ListModelsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListModels', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.TestProviderResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListModelsResponse>(res.body!, () => m.ListModelsResponse(), kind);
   }
 
-  Future<m.ListModelsResponse> listModels(m.ListModelsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListModels', req.writeToBuffer()));
+  Future<m.ListPresetsResponse> listPresets(m.ListPresetsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListPresets', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListModelsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListPresetsResponse>(res.body!, () => m.ListPresetsResponse(), kind);
   }
 
-  Future<m.ListPresetsResponse> listPresets(m.ListPresetsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListPresets', req.writeToBuffer()));
+  Future<m.UpsertPresetResponse> upsertPreset(m.UpsertPresetRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/UpsertPreset', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListPresetsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.UpsertPresetResponse>(res.body!, () => m.UpsertPresetResponse(), kind);
   }
 
-  Future<m.UpsertPresetResponse> upsertPreset(m.UpsertPresetRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/UpsertPreset', req.writeToBuffer()));
+  Future<m.DeletePresetResponse> deletePreset(m.DeletePresetRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/DeletePreset', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.UpsertPresetResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.DeletePresetResponse>(res.body!, () => m.DeletePresetResponse(), kind);
   }
 
-  Future<m.DeletePresetResponse> deletePreset(m.DeletePresetRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/DeletePreset', req.writeToBuffer()));
+  Future<m.PreviewPresetResponse> previewPreset(m.PreviewPresetRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/PreviewPreset', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.DeletePresetResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.PreviewPresetResponse>(res.body!, () => m.PreviewPresetResponse(), kind);
   }
 
-  Future<m.PreviewPresetResponse> previewPreset(m.PreviewPresetRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/PreviewPreset', req.writeToBuffer()));
+  Future<m.GetConfigResponse> getConfig(m.GetConfigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.PreviewPresetResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetConfigResponse>(res.body!, () => m.GetConfigResponse(), kind);
   }
 
-  Future<m.GetConfigResponse> getConfig(m.GetConfigRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/GetConfig', req.writeToBuffer()));
+  Future<m.SetConfigResponse> setConfig(m.SetConfigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/SetConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.GetConfigResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.SetConfigResponse>(res.body!, () => m.SetConfigResponse(), kind);
   }
 
-  Future<m.SetConfigResponse> setConfig(m.SetConfigRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/SetConfig', req.writeToBuffer()));
+  Future<m.ListToolsResponse> listTools(m.ListToolsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/ListTools', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.SetConfigResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListToolsResponse>(res.body!, () => m.ListToolsResponse(), kind);
   }
 
-  Future<m.ListToolsResponse> listTools(m.ListToolsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/ListTools', req.writeToBuffer()));
+  Future<m.GetToolConfigResponse> getToolConfig(m.GetToolConfigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetToolConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListToolsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetToolConfigResponse>(res.body!, () => m.GetToolConfigResponse(), kind);
   }
 
-  Future<m.GetToolConfigResponse> getToolConfig(m.GetToolConfigRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/GetToolConfig', req.writeToBuffer()));
+  Future<m.SetToolConfigResponse> setToolConfig(m.SetToolConfigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/SetToolConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.GetToolConfigResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.SetToolConfigResponse>(res.body!, () => m.SetToolConfigResponse(), kind);
   }
 
-  Future<m.SetToolConfigResponse> setToolConfig(m.SetToolConfigRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/SetToolConfig', req.writeToBuffer()));
+  Future<m.SetExtensionConfigResponse> setExtensionConfig(m.SetExtensionConfigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/SetExtensionConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.SetToolConfigResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.SetExtensionConfigResponse>(res.body!, () => m.SetExtensionConfigResponse(), kind);
   }
 
-  Future<m.SetExtensionConfigResponse> setExtensionConfig(m.SetExtensionConfigRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/SetExtensionConfig', req.writeToBuffer()));
+  Future<m.UploadFileResponse> uploadFile(m.UploadFileRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/UploadFile', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.SetExtensionConfigResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.UploadFileResponse>(res.body!, () => m.UploadFileResponse(), kind);
   }
 
-  Future<m.UploadFileResponse> uploadFile(m.UploadFileRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/UploadFile', req.writeToBuffer()));
+  Future<m.IngestFileResponse> ingestFile(m.IngestFileRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/IngestFile', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.UploadFileResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.IngestFileResponse>(res.body!, () => m.IngestFileResponse(), kind);
   }
 
-  Future<m.IngestFileResponse> ingestFile(m.IngestFileRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/IngestFile', req.writeToBuffer()));
+  Future<m.GetFileResponse> getFile(m.GetFileRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetFile', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.IngestFileResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetFileResponse>(res.body!, () => m.GetFileResponse(), kind);
   }
 
-  Future<m.GetFileResponse> getFile(m.GetFileRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/GetFile', req.writeToBuffer()));
+  Future<m.GetFileMetaResponse> getFileMeta(m.GetFileMetaRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetFileMeta', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.GetFileResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetFileMetaResponse>(res.body!, () => m.GetFileMetaResponse(), kind);
   }
 
-  Future<m.GetFileMetaResponse> getFileMeta(m.GetFileMetaRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/GetFileMeta', req.writeToBuffer()));
+  Future<m.GetAgentConfigResponse> getAgentConfig(m.GetAgentConfigRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetAgentConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.GetFileMetaResponse.fromBuffer(res.body!);
-  }
-
-  Future<m.GetAgentConfigResponse> getAgentConfig(m.GetAgentConfigRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AgentService/GetAgentConfig', req.writeToBuffer()));
-    if (res.error != null) throw res.error!;
-    return m.GetAgentConfigResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetAgentConfigResponse>(res.body!, () => m.GetAgentConfigResponse(), kind);
   }
 
 }

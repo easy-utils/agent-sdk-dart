@@ -1,6 +1,6 @@
 name: agent_client_sdk
 description: "Agent typed client SDK for Dart/Flutter over easy-rpc (agent.v1.AgentService)."
-version: 0.1.0
+version: 0.16.0
 publish_to: 'none'
 
 environment:
@@ -10,6 +10,6 @@ dependencies:
   easy_rpc:
     git:
       url: https://github.com/easy-utils/easy-rpc-dart.git
-      ref: v0.4.0
+      ref: v3.0.0
   protobuf: ^6.1.0
   fixnum: ^1.1.1

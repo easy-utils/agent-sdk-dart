@@ -19,6 +19,7 @@ import 'package:protobuf/well_known_types/google/protobuf/struct.pb.dart' as $0;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
+/// Session is a row in the agent session table.
 class Session extends $pb.GeneratedMessage {
   factory Session({
     $core.String? name,
@@ -44,6 +45,7 @@ class Session extends $pb.GeneratedMessage {
     $core.String? lastMessagePreview,
     $core.String? variant,
     $core.int? messageSeq,
+    $core.String? group,
   }) {
     final result = Session._();
     if (name != null) result.name = name;
@@ -70,6 +72,7 @@ class Session extends $pb.GeneratedMessage {
       result.lastMessagePreview = lastMessagePreview;
     if (variant != null) result.variant = variant;
     if (messageSeq != null) result.messageSeq = messageSeq;
+    if (group != null) result.group = group;
     return result;
   }
 
@@ -109,6 +112,7 @@ class Session extends $pb.GeneratedMessage {
     ..aOS(21, _omitFieldNames ? '' : 'lastMessagePreview')
     ..aOS(22, _omitFieldNames ? '' : 'variant')
     ..aI(23, _omitFieldNames ? '' : 'messageSeq')
+    ..aOS(24, _omitFieldNames ? '' : 'group')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -140,6 +144,8 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearName() => $_clearField(1);
 
+  /// Canonical model reference "provider_id/model_id". A bare model id is
+  /// never resolved by flat lookup: the provider must be named explicitly.
   @$pb.TagNumber(2)
   $core.String get model => $_getSZ(1);
   @$pb.TagNumber(2)
@@ -266,6 +272,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   void clearLocale() => $_clearField(15);
 
+  /// UI aggregates.
   @$pb.TagNumber(16)
   $core.String get org => $_getSZ(15);
   @$pb.TagNumber(16)
@@ -320,7 +327,8 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(21)
   void clearLastMessagePreview() => $_clearField(21);
 
-  /// reasoning variant selected for this session (models.dev variant id).
+  /// Selected reasoning variant id (e.g. "low"/"medium"/"high"/"max"/"fast").
+  /// Empty means "no variant" (provider defaults; no providerOptions sent).
   @$pb.TagNumber(22)
   $core.String get variant => $_getSZ(21);
   @$pb.TagNumber(22)
@@ -330,7 +338,10 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(22)
   void clearVariant() => $_clearField(22);
 
-  /// monotonic per-session message counter (WatchSessions realtime list).
+  /// Monotonic per-session message counter, bumped for every appended message
+  /// (user/assistant/event/compaction). Clients derive the unread count as the
+  /// number of messages with seq greater than their locally-persisted read
+  /// watermark (read state is client-local; the agent never stores it).
   @$pb.TagNumber(23)
   $core.int get messageSeq => $_getIZ(22);
   @$pb.TagNumber(23)
@@ -339,8 +350,22 @@ class Session extends $pb.GeneratedMessage {
   $core.bool hasMessageSeq() => $_has(22);
   @$pb.TagNumber(23)
   void clearMessageSeq() => $_clearField(23);
+
+  /// Generic grouping key for a session (free-form, tenant-scoped). Empty =
+  /// ungrouped. A subsession records its parent's session name here, but the
+  /// field is deliberately generic: any client may group sessions arbitrarily
+  /// (project, workspace, task…). Not validated against an enum.
+  @$pb.TagNumber(24)
+  $core.String get group => $_getSZ(23);
+  @$pb.TagNumber(24)
+  set group($core.String value) => $_setString(23, value);
+  @$pb.TagNumber(24)
+  $core.bool hasGroup() => $_has(23);
+  @$pb.TagNumber(24)
+  void clearGroup() => $_clearField(24);
 }
 
+/// Message row (bare).
 class Message extends $pb.GeneratedMessage {
   factory Message({
     $core.String? id,
@@ -439,6 +464,7 @@ class Message extends $pb.GeneratedMessage {
   $pb.PbList<Part> get parts => $_getList(4);
 }
 
+/// A tool/text part body. `data` is the JSON/plain payload.
 class Part extends $pb.GeneratedMessage {
   factory Part({
     $core.String? id,
@@ -542,6 +568,7 @@ class Part extends $pb.GeneratedMessage {
   void clearData() => $_clearField(5);
 }
 
+/// Mailbox entry.
 class MailboxEntry extends $pb.GeneratedMessage {
   factory MailboxEntry({
     $core.String? id,
@@ -695,6 +722,7 @@ class MailboxEntry extends $pb.GeneratedMessage {
   void clearSeq() => $_clearField(9);
 }
 
+/// Preset row.
 class Preset extends $pb.GeneratedMessage {
   factory Preset({
     $core.String? id,
@@ -804,6 +832,10 @@ class Preset extends $pb.GeneratedMessage {
   void clearIsSystem() => $_clearField(6);
 }
 
+/// Provider row. A provider serves EXACTLY ONE modality (`capability`): its
+/// models all share that capability. A host that serves several modalities is
+/// registered once per modality (semantic grouping), so a modality's model
+/// picker is simply "the models of that modality's providers".
 class Provider extends $pb.GeneratedMessage {
   factory Provider({
     $core.String? providerId,
@@ -813,6 +845,7 @@ class Provider extends $pb.GeneratedMessage {
     $core.Iterable<$core.MapEntry<$core.String, $core.String>>? headers,
     $core.Iterable<ProviderModel>? models,
     $core.String? updatedAt,
+    $core.String? capability,
   }) {
     final result = Provider._();
     if (providerId != null) result.providerId = providerId;
@@ -822,6 +855,7 @@ class Provider extends $pb.GeneratedMessage {
     if (headers != null) result.headers.addEntries(headers);
     if (models != null) result.models.addAll(models);
     if (updatedAt != null) result.updatedAt = updatedAt;
+    if (capability != null) result.capability = capability;
     return result;
   }
 
@@ -850,6 +884,7 @@ class Provider extends $pb.GeneratedMessage {
     ..pPM<ProviderModel>(6, _omitFieldNames ? '' : 'models',
         subBuilder: ProviderModel.$_createMessage)
     ..aOS(7, _omitFieldNames ? '' : 'updatedAt')
+    ..aOS(8, _omitFieldNames ? '' : 'capability')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -922,8 +957,29 @@ class Provider extends $pb.GeneratedMessage {
   $core.bool hasUpdatedAt() => $_has(6);
   @$pb.TagNumber(7)
   void clearUpdatedAt() => $_clearField(7);
+
+  /// The single modality this provider serves (text | image | video | speech |
+  /// transcription | embedding | rerank | realtime). New field (no renumber).
+  @$pb.TagNumber(8)
+  $core.String get capability => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set capability($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasCapability() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearCapability() => $_clearField(8);
 }
 
+/// Provider model entry. All of a provider's models share the provider's
+/// `capability`; `model_type` mirrors it (kept for wire compatibility and for
+/// clients that read the model directly).
+///
+///   - text      -> context_limit (> 0) REQUIRED (drives compaction budgets)
+///   - non-text  -> context_limit MUST be 0 (not a chat model)
+///
+/// A provider protocol may serve any modality its wire format supports
+/// (validated server-side against the capability matrix — see
+/// ListProvidersCatalog). There is no gateway special-casing.
 class ProviderModel extends $pb.GeneratedMessage {
   factory ProviderModel({
     $core.String? id,
@@ -998,7 +1054,6 @@ class ProviderModel extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
 
-  /// required for non-gateway providers; 0 for gateway-classified kinds.
   @$pb.TagNumber(3)
   $fixnum.Int64 get contextLimit => $_getI64(2);
   @$pb.TagNumber(3)
@@ -1008,7 +1063,7 @@ class ProviderModel extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearContextLimit() => $_clearField(3);
 
-  /// text | image | video | speech | transcription | embedding | reranking.
+  /// The model's modality, identical to its provider's `capability`.
   @$pb.TagNumber(4)
   $core.String get modelType => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -1019,6 +1074,7 @@ class ProviderModel extends $pb.GeneratedMessage {
   void clearModelType() => $_clearField(4);
 }
 
+/// Tool discovery entry.
 class ToolInfo extends $pb.GeneratedMessage {
   factory ToolInfo({
     $core.String? name,
@@ -1126,6 +1182,7 @@ class ToolInfo extends $pb.GeneratedMessage {
   $pb.PbList<$core.String> get requiredConfig => $_getList(5);
 }
 
+/// Declared config knob for a tool/extension.
 class ToolConfigField extends $pb.GeneratedMessage {
   factory ToolConfigField({
     $core.String? name,
@@ -1134,6 +1191,8 @@ class ToolConfigField extends $pb.GeneratedMessage {
     $0.Value? default_6,
     $core.String? description,
     $core.String? scope,
+    $core.String? kind,
+    $core.String? capability,
   }) {
     final result = ToolConfigField._();
     if (name != null) result.name = name;
@@ -1142,6 +1201,8 @@ class ToolConfigField extends $pb.GeneratedMessage {
     if (default_6 != null) result.default_6 = default_6;
     if (description != null) result.description = description;
     if (scope != null) result.scope = scope;
+    if (kind != null) result.kind = kind;
+    if (capability != null) result.capability = capability;
     return result;
   }
 
@@ -1165,6 +1226,8 @@ class ToolConfigField extends $pb.GeneratedMessage {
         subBuilder: $0.Value.$_createMessage)
     ..aOS(7, _omitFieldNames ? '' : 'description')
     ..aOS(8, _omitFieldNames ? '' : 'scope')
+    ..aOS(9, _omitFieldNames ? '' : 'kind')
+    ..aOS(10, _omitFieldNames ? '' : 'capability')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1238,8 +1301,33 @@ class ToolConfigField extends $pb.GeneratedMessage {
   $core.bool hasScope() => $_has(5);
   @$pb.TagNumber(8)
   void clearScope() => $_clearField(8);
+
+  /// Semantic kind: "value" (default, an ordinary knob) or "model" (the value
+  /// is a `provider_id/model_id` reference; the client renders a picker scoped
+  /// to `capability` against the provider registry instead of a text field).
+  @$pb.TagNumber(9)
+  $core.String get kind => $_getSZ(6);
+  @$pb.TagNumber(9)
+  set kind($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(9)
+  $core.bool hasKind() => $_has(6);
+  @$pb.TagNumber(9)
+  void clearKind() => $_clearField(9);
+
+  /// Required when `kind == "model"`: the modality the reference must match
+  /// (text | image | video | speech | transcription | embedding | rerank |
+  /// realtime).
+  @$pb.TagNumber(10)
+  $core.String get capability => $_getSZ(7);
+  @$pb.TagNumber(10)
+  set capability($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(10)
+  $core.bool hasCapability() => $_has(7);
+  @$pb.TagNumber(10)
+  void clearCapability() => $_clearField(10);
 }
 
+/// A tool's configured value.
 class ToolConfig extends $pb.GeneratedMessage {
   factory ToolConfig({
     $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? values,
@@ -1295,6 +1383,7 @@ class ToolConfig extends $pb.GeneratedMessage {
   $pb.PbMap<$core.String, $0.Value> get values => $_getMap(0);
 }
 
+/// SSE-ish stream event emitted by Prompt streaming.
 class PromptResponse extends $pb.GeneratedMessage {
   factory PromptResponse({
     $core.String? event,
@@ -1374,6 +1463,11 @@ class PromptResponse extends $pb.GeneratedMessage {
   void clearEid() => $_clearField(3);
 }
 
+/// WatchSession streams live session events (the Connect replacement for the
+/// SSE /stream endpoint): turn deltas, tool calls, errors and completions.
+/// `since` is a message id ANCHOR for incremental replay: when set, a replay
+/// starts AFTER that message (so a client that was offline still catches the
+/// turns that completed meanwhile). Empty = live-from-now (or the active run).
 class WatchSessionRequest extends $pb.GeneratedMessage {
   factory WatchSessionRequest({
     $core.String? id,
@@ -1529,6 +1623,9 @@ class WatchSessionResponse extends $pb.GeneratedMessage {
   void clearEid() => $_clearField(3);
 }
 
+/// WatchSessions streams the session list in real time: an initial full
+/// snapshot, then per-session upserts (message-fact changes, settings changes)
+/// and removals (deletes). Replaces list polling.
 class WatchSessionsRequest extends $pb.GeneratedMessage {
   factory WatchSessionsRequest() => WatchSessionsRequest._();
 
@@ -1627,12 +1724,16 @@ class WatchSessionsResponse extends $pb.GeneratedMessage {
           WatchSessionsResponse.$_createMessage);
   static WatchSessionsResponse? _defaultInstance;
 
+  /// New/updated session snapshots (message facts + settings).
   @$pb.TagNumber(1)
   $pb.PbList<Session> get upserts => $_getList(0);
 
+  /// Session names that were removed.
   @$pb.TagNumber(2)
   $pb.PbList<$core.String> get removed => $_getList(1);
 
+  /// True for the initial full snapshot: the client replaces its whole list
+  /// with `upserts` (dropping anything not present) instead of merging.
   @$pb.TagNumber(3)
   $core.bool get snapshot => $_getBF(2);
   @$pb.TagNumber(3)
@@ -1643,6 +1744,7 @@ class WatchSessionsResponse extends $pb.GeneratedMessage {
   void clearSnapshot() => $_clearField(3);
 }
 
+/// A file reference (attachment).
 class FileRef extends $pb.GeneratedMessage {
   factory FileRef({
     $core.String? code,
@@ -1838,6 +1940,7 @@ class CreateSessionRequest extends $pb.GeneratedMessage {
     $core.String? repo,
     $core.String? branch,
     $core.String? variant,
+    $core.String? group,
   }) {
     final result = CreateSessionRequest._();
     if (name != null) result.name = name;
@@ -1847,6 +1950,7 @@ class CreateSessionRequest extends $pb.GeneratedMessage {
     if (repo != null) result.repo = repo;
     if (branch != null) result.branch = branch;
     if (variant != null) result.variant = variant;
+    if (group != null) result.group = group;
     return result;
   }
 
@@ -1870,6 +1974,7 @@ class CreateSessionRequest extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'repo')
     ..aOS(6, _omitFieldNames ? '' : 'branch')
     ..aOS(7, _omitFieldNames ? '' : 'variant')
+    ..aOS(8, _omitFieldNames ? '' : 'group')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1904,6 +2009,7 @@ class CreateSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearName() => $_clearField(1);
 
+  /// Canonical model reference "provider_id/model_id".
   @$pb.TagNumber(2)
   $core.String get model => $_getSZ(1);
   @$pb.TagNumber(2)
@@ -1949,6 +2055,7 @@ class CreateSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearBranch() => $_clearField(6);
 
+  /// Optional reasoning variant id (see ModelInfo.variants).
   @$pb.TagNumber(7)
   $core.String get variant => $_getSZ(6);
   @$pb.TagNumber(7)
@@ -1957,6 +2064,17 @@ class CreateSessionRequest extends $pb.GeneratedMessage {
   $core.bool hasVariant() => $_has(6);
   @$pb.TagNumber(7)
   void clearVariant() => $_clearField(7);
+
+  /// Optional generic grouping key (empty = ungrouped). A subsession sets this
+  /// to its parent session name.
+  @$pb.TagNumber(8)
+  $core.String get group => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set group($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasGroup() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearGroup() => $_clearField(8);
 }
 
 class CreateSessionResponse extends $pb.GeneratedMessage {
@@ -2264,6 +2382,18 @@ class DeleteSessionResponse extends $pb.GeneratedMessage {
   void clearOk() => $_clearField(1);
 }
 
+/// ListMessages reads a session's message chain. Two modes:
+///   * ANCHORED / incremental: `after` is a message id ANCHOR (a pin) the
+///     client already has. The response is the chain segment AFTER it, i.e. the
+///     walk from the current tip back to (excluding) that anchor — the messages
+///     appended since the client last synced. If the anchor is NOT on the
+///     current chain (it was withdrawn via undo, or the chain was forked), the
+///     response sets `resync=true` and the client must drop its cache and
+///     re-fetch. `tip_id` always echoes the current tip so the client can store
+///     it as the next anchor.
+///   * BACKWARD paging (existing): with `before` set (and `after` empty) the
+///     chain is read oldest→newest for `limit` messages BEFORE that cursor;
+///     with neither set, the newest `limit` messages.
 class ListMessagesRequest extends $pb.GeneratedMessage {
   factory ListMessagesRequest({
     $core.String? id,
@@ -2339,6 +2469,7 @@ class ListMessagesRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearLimit() => $_clearField(2);
 
+  /// Backward-paging cursor (exclusive): return messages before this id.
   @$pb.TagNumber(3)
   $core.String get before => $_getSZ(2);
   @$pb.TagNumber(3)
@@ -2348,6 +2479,8 @@ class ListMessagesRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearBefore() => $_clearField(3);
 
+  /// Incremental anchor (exclusive): return messages after this id. When the
+  /// anchor is absent from the current chain, the server signals `resync`.
   @$pb.TagNumber(4)
   $core.String get after => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -2428,6 +2561,8 @@ class ListMessagesResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $pb.PbList<Message> get messages => $_getList(1);
 
+  /// The anchor was not on the current chain (withdrawn/forked): the client
+  /// must discard its local copy of this session and re-fetch from scratch.
   @$pb.TagNumber(3)
   $core.bool get resync => $_getBF(2);
   @$pb.TagNumber(3)
@@ -2437,6 +2572,7 @@ class ListMessagesResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearResync() => $_clearField(3);
 
+  /// Current chain tip id (store as the next `after` anchor).
   @$pb.TagNumber(4)
   $core.String get tipId => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -3322,6 +3458,7 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
     $core.String? systemPrompt,
     $core.String? locale,
     $core.String? variant,
+    $core.String? group,
   }) {
     final result = UpdateSettingsRequest._();
     if (id != null) result.id = id;
@@ -3331,6 +3468,7 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
     if (systemPrompt != null) result.systemPrompt = systemPrompt;
     if (locale != null) result.locale = locale;
     if (variant != null) result.variant = variant;
+    if (group != null) result.group = group;
     return result;
   }
 
@@ -3354,6 +3492,7 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'systemPrompt')
     ..aOS(6, _omitFieldNames ? '' : 'locale')
     ..aOS(7, _omitFieldNames ? '' : 'variant')
+    ..aOS(8, _omitFieldNames ? '' : 'group')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -3407,6 +3546,8 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearPreset() => $_clearField(3);
 
+  /// Optional: omitted means "inherit (preset / default)"; an explicit value
+  /// must be > 0 (0 is rejected).
   @$pb.TagNumber(4)
   $core.int get maxTurns => $_getIZ(3);
   @$pb.TagNumber(4)
@@ -3434,6 +3575,7 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearLocale() => $_clearField(6);
 
+  /// Selected reasoning variant id (empty clears it).
   @$pb.TagNumber(7)
   $core.String get variant => $_getSZ(6);
   @$pb.TagNumber(7)
@@ -3442,6 +3584,17 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
   $core.bool hasVariant() => $_has(6);
   @$pb.TagNumber(7)
   void clearVariant() => $_clearField(7);
+
+  /// Generic grouping key (empty clears it). Included for completeness; the
+  /// subsession flow sets it at creation time.
+  @$pb.TagNumber(8)
+  $core.String get group => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set group($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasGroup() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearGroup() => $_clearField(8);
 }
 
 class UpdateSettingsResponse extends $pb.GeneratedMessage {
@@ -3889,12 +4042,16 @@ class ListProvidersCatalogRequest extends $pb.GeneratedMessage {
   static ListProvidersCatalogRequest? _defaultInstance;
 }
 
+/// The registration catalog: every provider api type the server accepts and
+/// the model capabilities each can serve. Single source of truth for client
+/// registration forms — clients fetch this instead of hardcoding the matrix
+/// (with a bundled fallback copy for offline use).
 class ListProvidersCatalogResponse extends $pb.GeneratedMessage {
   factory ListProvidersCatalogResponse({
-    $core.Iterable<$core.MapEntry<$core.String, CatalogProvider>>? providers,
+    $core.Iterable<$core.MapEntry<$core.String, ApiTypeCatalog>>? apiTypes,
   }) {
     final result = ListProvidersCatalogResponse._();
-    if (providers != null) result.providers.addEntries(providers);
+    if (apiTypes != null) result.apiTypes.addEntries(apiTypes);
     return result;
   }
 
@@ -3911,12 +4068,12 @@ class ListProvidersCatalogResponse extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ListProvidersCatalogResponse',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
       createEmptyInstance: ListProvidersCatalogResponse.$_createMessage)
-    ..m<$core.String, CatalogProvider>(1, _omitFieldNames ? '' : 'providers',
-        entryClassName: 'ListProvidersCatalogResponse.ProvidersEntry',
+    ..m<$core.String, ApiTypeCatalog>(1, _omitFieldNames ? '' : 'apiTypes',
+        entryClassName: 'ListProvidersCatalogResponse.ApiTypesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: CatalogProvider.$_createMessage,
-        valueDefaultOrMaker: CatalogProvider.getDefault,
+        valueCreator: ApiTypeCatalog.$_createMessage,
+        valueDefaultOrMaker: ApiTypeCatalog.getDefault,
         packageName: const $pb.PackageName('agent.v1'))
     ..hasRequiredFields = false;
 
@@ -3948,119 +4105,63 @@ class ListProvidersCatalogResponse extends $pb.GeneratedMessage {
           ListProvidersCatalogResponse.$_createMessage);
   static ListProvidersCatalogResponse? _defaultInstance;
 
+  /// api type id (e.g. "openai-compatible") -> its catalog entry.
   @$pb.TagNumber(1)
-  $pb.PbMap<$core.String, CatalogProvider> get providers => $_getMap(0);
+  $pb.PbMap<$core.String, ApiTypeCatalog> get apiTypes => $_getMap(0);
 }
 
-class CatalogProvider extends $pb.GeneratedMessage {
-  factory CatalogProvider({
-    $core.String? id,
-    $core.String? name,
-    $core.String? api,
-    $core.String? npm,
-    $core.Iterable<$core.String>? env,
-    $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? models,
+/// Catalog entry for one provider api type.
+class ApiTypeCatalog extends $pb.GeneratedMessage {
+  factory ApiTypeCatalog({
+    $core.Iterable<$core.String>? capabilities,
   }) {
-    final result = CatalogProvider._();
-    if (id != null) result.id = id;
-    if (name != null) result.name = name;
-    if (api != null) result.api = api;
-    if (npm != null) result.npm = npm;
-    if (env != null) result.env.addAll(env);
-    if (models != null) result.models.addEntries(models);
+    final result = ApiTypeCatalog._();
+    if (capabilities != null) result.capabilities.addAll(capabilities);
     return result;
   }
 
-  CatalogProvider._();
+  ApiTypeCatalog._();
 
-  factory CatalogProvider.fromBuffer($core.List<$core.int> data,
+  factory ApiTypeCatalog.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      CatalogProvider()..mergeFromBuffer(data, registry);
-  factory CatalogProvider.fromJson($core.String json,
+      ApiTypeCatalog()..mergeFromBuffer(data, registry);
+  factory ApiTypeCatalog.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      CatalogProvider()..mergeFromJson(json, registry);
+      ApiTypeCatalog()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'CatalogProvider',
+      _omitMessageNames ? '' : 'ApiTypeCatalog',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: CatalogProvider.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'api')
-    ..aOS(4, _omitFieldNames ? '' : 'npm')
-    ..pPS(5, _omitFieldNames ? '' : 'env')
-    ..m<$core.String, $0.Value>(6, _omitFieldNames ? '' : 'models',
-        entryClassName: 'CatalogProvider.ModelsEntry',
-        keyFieldType: $pb.PbFieldType.OS,
-        valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: $0.Value.$_createMessage,
-        valueDefaultOrMaker: $0.Value.getDefault,
-        packageName: const $pb.PackageName('agent.v1'))
+      createEmptyInstance: ApiTypeCatalog.$_createMessage)
+    ..pPS(1, _omitFieldNames ? '' : 'capabilities')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CatalogProvider clone() => deepCopy();
+  ApiTypeCatalog clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CatalogProvider copyWith(void Function(CatalogProvider) updates) =>
-      super.copyWith((message) => updates(message as CatalogProvider))
-          as CatalogProvider;
+  ApiTypeCatalog copyWith(void Function(ApiTypeCatalog) updates) =>
+      super.copyWith((message) => updates(message as ApiTypeCatalog))
+          as ApiTypeCatalog;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  @$core.Deprecated('Use CatalogProvider() / CatalogProvider.new instead')
-  static CatalogProvider create() => CatalogProvider._();
-  static $pb.GeneratedMessage $_createMessage() => CatalogProvider._();
+  @$core.Deprecated('Use ApiTypeCatalog() / ApiTypeCatalog.new instead')
+  static ApiTypeCatalog create() => ApiTypeCatalog._();
+  static $pb.GeneratedMessage $_createMessage() => ApiTypeCatalog._();
   @$core.override
-  CatalogProvider createEmptyInstance() => CatalogProvider._();
+  ApiTypeCatalog createEmptyInstance() => ApiTypeCatalog._();
   @$core.pragma('dart2js:noInline')
-  static CatalogProvider getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CatalogProvider>(
-          CatalogProvider.$_createMessage);
-  static CatalogProvider? _defaultInstance;
+  static ApiTypeCatalog getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ApiTypeCatalog>(
+          ApiTypeCatalog.$_createMessage);
+  static ApiTypeCatalog? _defaultInstance;
 
+  /// Capability tags a model of this api type may declare in `model_type`
+  /// (text | image | video | speech | transcription | embedding | rerank).
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set id($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearId() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set name($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearName() => $_clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get api => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set api($core.String value) => $_setString(2, value);
-  @$pb.TagNumber(3)
-  $core.bool hasApi() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearApi() => $_clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get npm => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set npm($core.String value) => $_setString(3, value);
-  @$pb.TagNumber(4)
-  $core.bool hasNpm() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearNpm() => $_clearField(4);
-
-  @$pb.TagNumber(5)
-  $pb.PbList<$core.String> get env => $_getList(4);
-
-  @$pb.TagNumber(6)
-  $pb.PbMap<$core.String, $0.Value> get models => $_getMap(5);
+  $pb.PbList<$core.String> get capabilities => $_getList(0);
 }
 
 class RegisterProviderRequest extends $pb.GeneratedMessage {
@@ -4183,197 +4284,6 @@ class RegisterProviderResponse extends $pb.GeneratedMessage {
   $core.bool hasOk() => $_has(0);
   @$pb.TagNumber(1)
   void clearOk() => $_clearField(1);
-}
-
-class DiscoverGatewayModelsRequest extends $pb.GeneratedMessage {
-  factory DiscoverGatewayModelsRequest({
-    $core.String? providerId,
-    $core.String? apiType,
-    $core.String? baseUrl,
-    $core.String? apiKey,
-    $core.Iterable<$core.MapEntry<$core.String, $core.String>>? headers,
-  }) {
-    final result = DiscoverGatewayModelsRequest._();
-    if (providerId != null) result.providerId = providerId;
-    if (apiType != null) result.apiType = apiType;
-    if (baseUrl != null) result.baseUrl = baseUrl;
-    if (apiKey != null) result.apiKey = apiKey;
-    if (headers != null) result.headers.addEntries(headers);
-    return result;
-  }
-
-  DiscoverGatewayModelsRequest._();
-
-  factory DiscoverGatewayModelsRequest.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      DiscoverGatewayModelsRequest()..mergeFromBuffer(data, registry);
-  factory DiscoverGatewayModelsRequest.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      DiscoverGatewayModelsRequest()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DiscoverGatewayModelsRequest',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: DiscoverGatewayModelsRequest.$_createMessage)
-    ..aOS(1, _omitFieldNames ? '' : 'providerId')
-    ..aOS(2, _omitFieldNames ? '' : 'apiType')
-    ..aOS(3, _omitFieldNames ? '' : 'baseUrl')
-    ..aOS(4, _omitFieldNames ? '' : 'apiKey')
-    ..m<$core.String, $core.String>(5, _omitFieldNames ? '' : 'headers',
-        entryClassName: 'DiscoverGatewayModelsRequest.HeadersEntry',
-        keyFieldType: $pb.PbFieldType.OS,
-        valueFieldType: $pb.PbFieldType.OS,
-        packageName: const $pb.PackageName('agent.v1'))
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DiscoverGatewayModelsRequest clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DiscoverGatewayModelsRequest copyWith(
-          void Function(DiscoverGatewayModelsRequest) updates) =>
-      super.copyWith(
-              (message) => updates(message as DiscoverGatewayModelsRequest))
-          as DiscoverGatewayModelsRequest;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use DiscoverGatewayModelsRequest() / DiscoverGatewayModelsRequest.new instead')
-  static DiscoverGatewayModelsRequest create() =>
-      DiscoverGatewayModelsRequest._();
-  static $pb.GeneratedMessage $_createMessage() =>
-      DiscoverGatewayModelsRequest._();
-  @$core.override
-  DiscoverGatewayModelsRequest createEmptyInstance() =>
-      DiscoverGatewayModelsRequest._();
-  @$core.pragma('dart2js:noInline')
-  static DiscoverGatewayModelsRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DiscoverGatewayModelsRequest>(
-          DiscoverGatewayModelsRequest.$_createMessage);
-  static DiscoverGatewayModelsRequest? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get providerId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set providerId($core.String value) => $_setString(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasProviderId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearProviderId() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get apiType => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set apiType($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasApiType() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearApiType() => $_clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get baseUrl => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set baseUrl($core.String value) => $_setString(2, value);
-  @$pb.TagNumber(3)
-  $core.bool hasBaseUrl() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearBaseUrl() => $_clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get apiKey => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set apiKey($core.String value) => $_setString(3, value);
-  @$pb.TagNumber(4)
-  $core.bool hasApiKey() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearApiKey() => $_clearField(4);
-
-  @$pb.TagNumber(5)
-  $pb.PbMap<$core.String, $core.String> get headers => $_getMap(4);
-}
-
-class DiscoverGatewayModelsResponse extends $pb.GeneratedMessage {
-  factory DiscoverGatewayModelsResponse({
-    $core.bool? ok,
-    $core.String? error,
-    $core.Iterable<ProviderModel>? models,
-  }) {
-    final result = DiscoverGatewayModelsResponse._();
-    if (ok != null) result.ok = ok;
-    if (error != null) result.error = error;
-    if (models != null) result.models.addAll(models);
-    return result;
-  }
-
-  DiscoverGatewayModelsResponse._();
-
-  factory DiscoverGatewayModelsResponse.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      DiscoverGatewayModelsResponse()..mergeFromBuffer(data, registry);
-  factory DiscoverGatewayModelsResponse.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      DiscoverGatewayModelsResponse()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DiscoverGatewayModelsResponse',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
-      createEmptyInstance: DiscoverGatewayModelsResponse.$_createMessage)
-    ..aOB(1, _omitFieldNames ? '' : 'ok')
-    ..aOS(2, _omitFieldNames ? '' : 'error')
-    ..pPM<ProviderModel>(3, _omitFieldNames ? '' : 'models',
-        subBuilder: ProviderModel.$_createMessage)
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DiscoverGatewayModelsResponse clone() => deepCopy();
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DiscoverGatewayModelsResponse copyWith(
-          void Function(DiscoverGatewayModelsResponse) updates) =>
-      super.copyWith(
-              (message) => updates(message as DiscoverGatewayModelsResponse))
-          as DiscoverGatewayModelsResponse;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  @$core.Deprecated(
-      'Use DiscoverGatewayModelsResponse() / DiscoverGatewayModelsResponse.new instead')
-  static DiscoverGatewayModelsResponse create() =>
-      DiscoverGatewayModelsResponse._();
-  static $pb.GeneratedMessage $_createMessage() =>
-      DiscoverGatewayModelsResponse._();
-  @$core.override
-  DiscoverGatewayModelsResponse createEmptyInstance() =>
-      DiscoverGatewayModelsResponse._();
-  @$core.pragma('dart2js:noInline')
-  static DiscoverGatewayModelsResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DiscoverGatewayModelsResponse>(
-          DiscoverGatewayModelsResponse.$_createMessage);
-  static DiscoverGatewayModelsResponse? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.bool get ok => $_getBF(0);
-  @$pb.TagNumber(1)
-  set ok($core.bool value) => $_setBool(0, value);
-  @$pb.TagNumber(1)
-  $core.bool hasOk() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearOk() => $_clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get error => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set error($core.String value) => $_setString(1, value);
-  @$pb.TagNumber(2)
-  $core.bool hasError() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearError() => $_clearField(2);
-
-  @$pb.TagNumber(3)
-  $pb.PbList<ProviderModel> get models => $_getList(2);
 }
 
 class DeleteProviderRequest extends $pb.GeneratedMessage {
@@ -4605,6 +4515,7 @@ class TestProviderRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearModel() => $_clearField(5);
 
+  /// Optional reasoning variant id to exercise in the test generation.
   @$pb.TagNumber(6)
   $core.String get variant => $_getSZ(5);
   @$pb.TagNumber(6)
@@ -4614,6 +4525,8 @@ class TestProviderRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearVariant() => $_clearField(6);
 
+  /// What the model under test generates: "text" (default). Only text models
+  /// are testable today; image/video/speech are rejected with a clear message.
   @$pb.TagNumber(7)
   $core.String get capability => $_getSZ(6);
   @$pb.TagNumber(7)
@@ -4694,6 +4607,9 @@ class TestProviderResponse extends $pb.GeneratedMessage {
   void clearResult() => $_clearField(2);
 }
 
+/// ListModels returns the models of ONE provider. provider_id is required: the
+/// server rejects an empty value (InvalidArgument) so a global flat model list
+/// — which would surface duplicate ids across providers — is never produced.
 class ListModelsRequest extends $pb.GeneratedMessage {
   factory ListModelsRequest({
     $core.String? providerId,
@@ -4876,9 +4792,12 @@ class ModelInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
 
+  /// Reasoning variants offered by this model (from the models.dev catalog).
+  /// Empty when the model has no reasoning options or is not in the catalog.
   @$pb.TagNumber(3)
   $pb.PbList<ModelVariant> get variants => $_getList(2);
 
+  /// Context window (tokens) configured for this provider model.
   @$pb.TagNumber(4)
   $fixnum.Int64 get contextLimit => $_getI64(3);
   @$pb.TagNumber(4)
@@ -4889,6 +4808,8 @@ class ModelInfo extends $pb.GeneratedMessage {
   void clearContextLimit() => $_clearField(4);
 }
 
+/// A selectable reasoning variant for a model (e.g. low/medium/high/max, or a
+/// fast mode). `id` is passed back on CreateSession/SetModel/UpdateSettings.
 class ModelVariant extends $pb.GeneratedMessage {
   factory ModelVariant({
     $core.String? id,
@@ -4970,6 +4891,9 @@ class ModelVariant extends $pb.GeneratedMessage {
   void clearDescription() => $_clearField(3);
 }
 
+/// ListPresets lists presets. When locale is set (e.g. "zh"), each preset's
+/// system_prompt is resolved from its i18n map for that locale, falling back
+/// to the default prompt.
 class ListPresetsRequest extends $pb.GeneratedMessage {
   factory ListPresetsRequest({
     $core.String? locale,
@@ -6976,6 +6900,8 @@ class HealthResponse extends $pb.GeneratedMessage {
   void clearName() => $_clearField(2);
 }
 
+/// Tenant is one isolation domain. `id` is the plaintext isolation key used on
+/// the wire (abc.<id>.<...>) and in the database.
 class Tenant extends $pb.GeneratedMessage {
   factory Tenant({
     $core.String? id,
@@ -7051,6 +6977,8 @@ class Tenant extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
 
+  /// A disabled tenant's tokens stop authenticating (fail-closed); its data is
+  /// retained. Re-enable by clearing this flag.
   @$pb.TagNumber(3)
   $core.bool get disabled => $_getBF(2);
   @$pb.TagNumber(3)
@@ -7079,6 +7007,8 @@ class Tenant extends $pb.GeneratedMessage {
   void clearUpdatedAt() => $_clearField(5);
 }
 
+/// TenantToken is a bearer credential minted for one tenant. The plaintext is
+/// returned ONLY at issue/rotate time; the server stores just its sha256.
 class TenantToken extends $pb.GeneratedMessage {
   factory TenantToken({
     $core.String? tokenId,
@@ -7341,6 +7271,7 @@ class CreateTenantRequest extends $pb.GeneratedMessage {
           CreateTenantRequest.$_createMessage);
   static CreateTenantRequest? _defaultInstance;
 
+  /// Plaintext tenant id: ^[A-Za-z0-9_-]{1,64}$.
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -7423,6 +7354,7 @@ class CreateTenantResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Tenant ensureTenant() => $_ensure(0);
 
+  /// The bootstrap token minted for the new tenant (plaintext, shown once).
   @$pb.TagNumber(2)
   $core.String get token => $_getSZ(1);
   @$pb.TagNumber(2)
@@ -7828,6 +7760,7 @@ class IssueTenantTokenResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   TenantToken ensureToken() => $_ensure(0);
 
+  /// The plaintext token (shown once; never retrievable again).
   @$pb.TagNumber(2)
   $core.String get plaintext => $_getSZ(1);
   @$pb.TagNumber(2)
@@ -8199,6 +8132,7 @@ class RotateTenantTokenResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   TenantToken ensureToken() => $_ensure(0);
 
+  /// The new plaintext token (shown once).
   @$pb.TagNumber(2)
   $core.String get plaintext => $_getSZ(1);
   @$pb.TagNumber(2)
@@ -8247,9 +8181,6 @@ class AgentServiceApi {
           $pb.ClientContext? ctx, WatchSessionRequest request) =>
       _client.invoke<WatchSessionResponse>(
           ctx, 'AgentService', 'WatchSession', request, WatchSessionResponse());
-
-  /// WatchSessions streams realtime session-list upserts/removals for the
-  /// signed-in tenant. First response is snapshot=true (full list).
   $async.Future<WatchSessionsResponse> watchSessions(
           $pb.ClientContext? ctx, WatchSessionsRequest request) =>
       _client.invoke<WatchSessionsResponse>(ctx, 'AgentService',
@@ -8302,14 +8233,6 @@ class AgentServiceApi {
           $pb.ClientContext? ctx, RegisterProviderRequest request) =>
       _client.invoke<RegisterProviderResponse>(ctx, 'AgentService',
           'RegisterProvider', request, RegisterProviderResponse());
-
-  /// DiscoverGatewayModels asks a vercel-compatible-gateway for the models it
-  /// serves (the gateway's /config) and classifies each by the advertised
-  /// model_type. The gateway is the only provider that can answer this.
-  $async.Future<DiscoverGatewayModelsResponse> discoverGatewayModels(
-          $pb.ClientContext? ctx, DiscoverGatewayModelsRequest request) =>
-      _client.invoke<DiscoverGatewayModelsResponse>(ctx, 'AgentService',
-          'DiscoverGatewayModels', request, DiscoverGatewayModelsResponse());
   $async.Future<DeleteProviderResponse> deleteProvider(
           $pb.ClientContext? ctx, DeleteProviderRequest request) =>
       _client.invoke<DeleteProviderResponse>(ctx, 'AgentService',

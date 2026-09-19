@@ -63,6 +63,7 @@ const Session$json = {
     },
     {'1': 'variant', '3': 22, '4': 1, '5': 9, '10': 'variant'},
     {'1': 'message_seq', '3': 23, '4': 1, '5': 5, '10': 'messageSeq'},
+    {'1': 'group', '3': 24, '4': 1, '5': 9, '10': 'group'},
   ],
 };
 
@@ -81,7 +82,7 @@ final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode(
     'b3VudBgTIAEoBVILdW5yZWFkQ291bnQSJgoPbGFzdF9tZXNzYWdlX2F0GBQgASgJUg1sYXN0TW'
     'Vzc2FnZUF0EjAKFGxhc3RfbWVzc2FnZV9wcmV2aWV3GBUgASgJUhJsYXN0TWVzc2FnZVByZXZp'
     'ZXcSGAoHdmFyaWFudBgWIAEoCVIHdmFyaWFudBIfCgttZXNzYWdlX3NlcRgXIAEoBVIKbWVzc2'
-    'FnZVNlcQ==');
+    'FnZVNlcRIUCgVncm91cBgYIAEoCVIFZ3JvdXA=');
 
 @$core.Deprecated('Use messageDescriptor instead')
 const Message$json = {
@@ -200,6 +201,7 @@ const Provider$json = {
       '10': 'models'
     },
     {'1': 'updated_at', '3': 7, '4': 1, '5': 9, '10': 'updatedAt'},
+    {'1': 'capability', '3': 8, '4': 1, '5': 9, '10': 'capability'},
   ],
   '3': [Provider_HeadersEntry$json],
 };
@@ -220,8 +222,9 @@ final $typed_data.Uint8List providerDescriptor = $convert.base64Decode(
     'gCIAEoCVIHYXBpVHlwZRIZCghiYXNlX3VybBgDIAEoCVIHYmFzZVVybBIXCgdhcGlfa2V5GAQg'
     'ASgJUgZhcGlLZXkSOQoHaGVhZGVycxgFIAMoCzIfLmFnZW50LnYxLlByb3ZpZGVyLkhlYWRlcn'
     'NFbnRyeVIHaGVhZGVycxIvCgZtb2RlbHMYBiADKAsyFy5hZ2VudC52MS5Qcm92aWRlck1vZGVs'
-    'UgZtb2RlbHMSHQoKdXBkYXRlZF9hdBgHIAEoCVIJdXBkYXRlZEF0GjoKDEhlYWRlcnNFbnRyeR'
-    'IQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');
+    'UgZtb2RlbHMSHQoKdXBkYXRlZF9hdBgHIAEoCVIJdXBkYXRlZEF0Eh4KCmNhcGFiaWxpdHkYCC'
+    'ABKAlSCmNhcGFiaWxpdHkaOgoMSGVhZGVyc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZh'
+    'bHVlGAIgASgJUgV2YWx1ZToCOAE=');
 
 @$core.Deprecated('Use providerModelDescriptor instead')
 const ProviderModel$json = {
@@ -292,6 +295,8 @@ const ToolConfigField$json = {
     },
     {'1': 'description', '3': 7, '4': 1, '5': 9, '10': 'description'},
     {'1': 'scope', '3': 8, '4': 1, '5': 9, '10': 'scope'},
+    {'1': 'kind', '3': 9, '4': 1, '5': 9, '10': 'kind'},
+    {'1': 'capability', '3': 10, '4': 1, '5': 9, '10': 'capability'},
   ],
 };
 
@@ -300,7 +305,8 @@ final $typed_data.Uint8List toolConfigFieldDescriptor = $convert.base64Decode(
     'Cg9Ub29sQ29uZmlnRmllbGQSEgoEbmFtZRgBIAEoCVIEbmFtZRISCgR0eXBlGAIgASgJUgR0eX'
     'BlEh8KC2VudW1fdmFsdWVzGAMgAygJUgplbnVtVmFsdWVzEjAKB2RlZmF1bHQYBiABKAsyFi5n'
     'b29nbGUucHJvdG9idWYuVmFsdWVSB2RlZmF1bHQSIAoLZGVzY3JpcHRpb24YByABKAlSC2Rlc2'
-    'NyaXB0aW9uEhQKBXNjb3BlGAggASgJUgVzY29wZQ==');
+    'NyaXB0aW9uEhQKBXNjb3BlGAggASgJUgVzY29wZRISCgRraW5kGAkgASgJUgRraW5kEh4KCmNh'
+    'cGFiaWxpdHkYCiABKAlSCmNhcGFiaWxpdHk=');
 
 @$core.Deprecated('Use toolConfigDescriptor instead')
 const ToolConfig$json = {
@@ -500,6 +506,7 @@ const CreateSessionRequest$json = {
     {'1': 'repo', '3': 5, '4': 1, '5': 9, '10': 'repo'},
     {'1': 'branch', '3': 6, '4': 1, '5': 9, '10': 'branch'},
     {'1': 'variant', '3': 7, '4': 1, '5': 9, '10': 'variant'},
+    {'1': 'group', '3': 8, '4': 1, '5': 9, '10': 'group'},
   ],
 };
 
@@ -508,7 +515,7 @@ final $typed_data.Uint8List createSessionRequestDescriptor = $convert.base64Deco
     'ChRDcmVhdGVTZXNzaW9uUmVxdWVzdBISCgRuYW1lGAEgASgJUgRuYW1lEhQKBW1vZGVsGAIgAS'
     'gJUgVtb2RlbBIWCgZwcmVzZXQYAyABKAlSBnByZXNldBIQCgNvcmcYBCABKAlSA29yZxISCgRy'
     'ZXBvGAUgASgJUgRyZXBvEhYKBmJyYW5jaBgGIAEoCVIGYnJhbmNoEhgKB3ZhcmlhbnQYByABKA'
-    'lSB3ZhcmlhbnQ=');
+    'lSB3ZhcmlhbnQSFAoFZ3JvdXAYCCABKAlSBWdyb3Vw');
 
 @$core.Deprecated('Use createSessionResponseDescriptor instead')
 const CreateSessionResponse$json = {
@@ -864,9 +871,11 @@ const UpdateSettingsRequest$json = {
     {'1': 'system_prompt', '3': 5, '4': 1, '5': 9, '10': 'systemPrompt'},
     {'1': 'locale', '3': 6, '4': 1, '5': 9, '10': 'locale'},
     {'1': 'variant', '3': 7, '4': 1, '5': 9, '10': 'variant'},
+    {'1': 'group', '3': 8, '4': 1, '5': 9, '9': 1, '10': 'group', '17': true},
   ],
   '8': [
     {'1': '_max_turns'},
+    {'1': '_group'},
   ],
 };
 
@@ -875,7 +884,8 @@ final $typed_data.Uint8List updateSettingsRequestDescriptor = $convert.base64Dec
     'ChVVcGRhdGVTZXR0aW5nc1JlcXVlc3QSDgoCaWQYASABKAlSAmlkEhQKBW1vZGVsGAIgASgJUg'
     'Vtb2RlbBIWCgZwcmVzZXQYAyABKAlSBnByZXNldBIgCgltYXhfdHVybnMYBCABKAVIAFIIbWF4'
     'VHVybnOIAQESIwoNc3lzdGVtX3Byb21wdBgFIAEoCVIMc3lzdGVtUHJvbXB0EhYKBmxvY2FsZR'
-    'gGIAEoCVIGbG9jYWxlEhgKB3ZhcmlhbnQYByABKAlSB3ZhcmlhbnRCDAoKX21heF90dXJucw==');
+    'gGIAEoCVIGbG9jYWxlEhgKB3ZhcmlhbnQYByABKAlSB3ZhcmlhbnQSGQoFZ3JvdXAYCCABKAlI'
+    'AVIFZ3JvdXCIAQFCDAoKX21heF90dXJuc0IICgZfZ3JvdXA=');
 
 @$core.Deprecated('Use updateSettingsResponseDescriptor instead')
 const UpdateSettingsResponse$json = {
@@ -991,20 +1001,20 @@ const ListProvidersCatalogResponse$json = {
   '1': 'ListProvidersCatalogResponse',
   '2': [
     {
-      '1': 'providers',
+      '1': 'api_types',
       '3': 1,
       '4': 3,
       '5': 11,
-      '6': '.agent.v1.ListProvidersCatalogResponse.ProvidersEntry',
-      '10': 'providers'
+      '6': '.agent.v1.ListProvidersCatalogResponse.ApiTypesEntry',
+      '10': 'apiTypes'
     },
   ],
-  '3': [ListProvidersCatalogResponse_ProvidersEntry$json],
+  '3': [ListProvidersCatalogResponse_ApiTypesEntry$json],
 };
 
 @$core.Deprecated('Use listProvidersCatalogResponseDescriptor instead')
-const ListProvidersCatalogResponse_ProvidersEntry$json = {
-  '1': 'ProvidersEntry',
+const ListProvidersCatalogResponse_ApiTypesEntry$json = {
+  '1': 'ApiTypesEntry',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     {
@@ -1012,7 +1022,7 @@ const ListProvidersCatalogResponse_ProvidersEntry$json = {
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.agent.v1.CatalogProvider',
+      '6': '.agent.v1.ApiTypeCatalog',
       '10': 'value'
     },
   ],
@@ -1021,56 +1031,22 @@ const ListProvidersCatalogResponse_ProvidersEntry$json = {
 
 /// Descriptor for `ListProvidersCatalogResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listProvidersCatalogResponseDescriptor = $convert.base64Decode(
-    'ChxMaXN0UHJvdmlkZXJzQ2F0YWxvZ1Jlc3BvbnNlElMKCXByb3ZpZGVycxgBIAMoCzI1LmFnZW'
-    '50LnYxLkxpc3RQcm92aWRlcnNDYXRhbG9nUmVzcG9uc2UuUHJvdmlkZXJzRW50cnlSCXByb3Zp'
-    'ZGVycxpXCg5Qcm92aWRlcnNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIvCgV2YWx1ZRgCIAEoCz'
-    'IZLmFnZW50LnYxLkNhdGFsb2dQcm92aWRlclIFdmFsdWU6AjgB');
+    'ChxMaXN0UHJvdmlkZXJzQ2F0YWxvZ1Jlc3BvbnNlElEKCWFwaV90eXBlcxgBIAMoCzI0LmFnZW'
+    '50LnYxLkxpc3RQcm92aWRlcnNDYXRhbG9nUmVzcG9uc2UuQXBpVHlwZXNFbnRyeVIIYXBpVHlw'
+    'ZXMaVQoNQXBpVHlwZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIuCgV2YWx1ZRgCIAEoCzIYLm'
+    'FnZW50LnYxLkFwaVR5cGVDYXRhbG9nUgV2YWx1ZToCOAE=');
 
-@$core.Deprecated('Use catalogProviderDescriptor instead')
-const CatalogProvider$json = {
-  '1': 'CatalogProvider',
+@$core.Deprecated('Use apiTypeCatalogDescriptor instead')
+const ApiTypeCatalog$json = {
+  '1': 'ApiTypeCatalog',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'api', '3': 3, '4': 1, '5': 9, '10': 'api'},
-    {'1': 'npm', '3': 4, '4': 1, '5': 9, '10': 'npm'},
-    {'1': 'env', '3': 5, '4': 3, '5': 9, '10': 'env'},
-    {
-      '1': 'models',
-      '3': 6,
-      '4': 3,
-      '5': 11,
-      '6': '.agent.v1.CatalogProvider.ModelsEntry',
-      '10': 'models'
-    },
+    {'1': 'capabilities', '3': 1, '4': 3, '5': 9, '10': 'capabilities'},
   ],
-  '3': [CatalogProvider_ModelsEntry$json],
 };
 
-@$core.Deprecated('Use catalogProviderDescriptor instead')
-const CatalogProvider_ModelsEntry$json = {
-  '1': 'ModelsEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {
-      '1': 'value',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.google.protobuf.Value',
-      '10': 'value'
-    },
-  ],
-  '7': {'7': true},
-};
-
-/// Descriptor for `CatalogProvider`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List catalogProviderDescriptor = $convert.base64Decode(
-    'Cg9DYXRhbG9nUHJvdmlkZXISDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSEA'
-    'oDYXBpGAMgASgJUgNhcGkSEAoDbnBtGAQgASgJUgNucG0SEAoDZW52GAUgAygJUgNlbnYSPQoG'
-    'bW9kZWxzGAYgAygLMiUuYWdlbnQudjEuQ2F0YWxvZ1Byb3ZpZGVyLk1vZGVsc0VudHJ5UgZtb2'
-    'RlbHMaUQoLTW9kZWxzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSLAoFdmFsdWUYAiABKAsyFi5n'
-    'b29nbGUucHJvdG9idWYuVmFsdWVSBXZhbHVlOgI4AQ==');
+/// Descriptor for `ApiTypeCatalog`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List apiTypeCatalogDescriptor = $convert.base64Decode(
+    'Cg5BcGlUeXBlQ2F0YWxvZxIiCgxjYXBhYmlsaXRpZXMYASADKAlSDGNhcGFiaWxpdGllcw==');
 
 @$core.Deprecated('Use registerProviderRequestDescriptor instead')
 const RegisterProviderRequest$json = {
@@ -1104,69 +1080,6 @@ const RegisterProviderResponse$json = {
 /// Descriptor for `RegisterProviderResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List registerProviderResponseDescriptor = $convert
     .base64Decode('ChhSZWdpc3RlclByb3ZpZGVyUmVzcG9uc2USDgoCb2sYASABKAhSAm9r');
-
-@$core.Deprecated('Use discoverGatewayModelsRequestDescriptor instead')
-const DiscoverGatewayModelsRequest$json = {
-  '1': 'DiscoverGatewayModelsRequest',
-  '2': [
-    {'1': 'provider_id', '3': 1, '4': 1, '5': 9, '10': 'providerId'},
-    {'1': 'api_type', '3': 2, '4': 1, '5': 9, '10': 'apiType'},
-    {'1': 'base_url', '3': 3, '4': 1, '5': 9, '10': 'baseUrl'},
-    {'1': 'api_key', '3': 4, '4': 1, '5': 9, '10': 'apiKey'},
-    {
-      '1': 'headers',
-      '3': 5,
-      '4': 3,
-      '5': 11,
-      '6': '.agent.v1.DiscoverGatewayModelsRequest.HeadersEntry',
-      '10': 'headers'
-    },
-  ],
-  '3': [DiscoverGatewayModelsRequest_HeadersEntry$json],
-};
-
-@$core.Deprecated('Use discoverGatewayModelsRequestDescriptor instead')
-const DiscoverGatewayModelsRequest_HeadersEntry$json = {
-  '1': 'HeadersEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
-/// Descriptor for `DiscoverGatewayModelsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List discoverGatewayModelsRequestDescriptor = $convert.base64Decode(
-    'ChxEaXNjb3ZlckdhdGV3YXlNb2RlbHNSZXF1ZXN0Eh8KC3Byb3ZpZGVyX2lkGAEgASgJUgpwcm'
-    '92aWRlcklkEhkKCGFwaV90eXBlGAIgASgJUgdhcGlUeXBlEhkKCGJhc2VfdXJsGAMgASgJUgdi'
-    'YXNlVXJsEhcKB2FwaV9rZXkYBCABKAlSBmFwaUtleRJNCgdoZWFkZXJzGAUgAygLMjMuYWdlbn'
-    'QudjEuRGlzY292ZXJHYXRld2F5TW9kZWxzUmVxdWVzdC5IZWFkZXJzRW50cnlSB2hlYWRlcnMa'
-    'OgoMSGVhZGVyc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZT'
-    'oCOAE=');
-
-@$core.Deprecated('Use discoverGatewayModelsResponseDescriptor instead')
-const DiscoverGatewayModelsResponse$json = {
-  '1': 'DiscoverGatewayModelsResponse',
-  '2': [
-    {'1': 'ok', '3': 1, '4': 1, '5': 8, '10': 'ok'},
-    {'1': 'error', '3': 2, '4': 1, '5': 9, '10': 'error'},
-    {
-      '1': 'models',
-      '3': 3,
-      '4': 3,
-      '5': 11,
-      '6': '.agent.v1.ProviderModel',
-      '10': 'models'
-    },
-  ],
-};
-
-/// Descriptor for `DiscoverGatewayModelsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List discoverGatewayModelsResponseDescriptor =
-    $convert.base64Decode(
-        'Ch1EaXNjb3ZlckdhdGV3YXlNb2RlbHNSZXNwb25zZRIOCgJvaxgBIAEoCFICb2sSFAoFZXJyb3'
-        'IYAiABKAlSBWVycm9yEi8KBm1vZGVscxgDIAMoCzIXLmFnZW50LnYxLlByb3ZpZGVyTW9kZWxS'
-        'Bm1vZGVscw==');
 
 @$core.Deprecated('Use deleteProviderRequestDescriptor instead')
 const DeleteProviderRequest$json = {
@@ -2176,11 +2089,6 @@ const $core.Map<$core.String, $core.dynamic> AgentServiceBase$json = {
       '3': '.agent.v1.RegisterProviderResponse'
     },
     {
-      '1': 'DiscoverGatewayModels',
-      '2': '.agent.v1.DiscoverGatewayModelsRequest',
-      '3': '.agent.v1.DiscoverGatewayModelsResponse'
-    },
-    {
       '1': 'DeleteProvider',
       '2': '.agent.v1.DeleteProviderRequest',
       '3': '.agent.v1.DeleteProviderResponse'
@@ -2329,16 +2237,11 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
   '.agent.v1.ProviderModel': ProviderModel$json,
   '.agent.v1.ListProvidersCatalogRequest': ListProvidersCatalogRequest$json,
   '.agent.v1.ListProvidersCatalogResponse': ListProvidersCatalogResponse$json,
-  '.agent.v1.ListProvidersCatalogResponse.ProvidersEntry':
-      ListProvidersCatalogResponse_ProvidersEntry$json,
-  '.agent.v1.CatalogProvider': CatalogProvider$json,
-  '.agent.v1.CatalogProvider.ModelsEntry': CatalogProvider_ModelsEntry$json,
+  '.agent.v1.ListProvidersCatalogResponse.ApiTypesEntry':
+      ListProvidersCatalogResponse_ApiTypesEntry$json,
+  '.agent.v1.ApiTypeCatalog': ApiTypeCatalog$json,
   '.agent.v1.RegisterProviderRequest': RegisterProviderRequest$json,
   '.agent.v1.RegisterProviderResponse': RegisterProviderResponse$json,
-  '.agent.v1.DiscoverGatewayModelsRequest': DiscoverGatewayModelsRequest$json,
-  '.agent.v1.DiscoverGatewayModelsRequest.HeadersEntry':
-      DiscoverGatewayModelsRequest_HeadersEntry$json,
-  '.agent.v1.DiscoverGatewayModelsResponse': DiscoverGatewayModelsResponse$json,
   '.agent.v1.DeleteProviderRequest': DeleteProviderRequest$json,
   '.agent.v1.DeleteProviderResponse': DeleteProviderResponse$json,
   '.agent.v1.TestProviderRequest': TestProviderRequest$json,
@@ -2414,34 +2317,32 @@ final $typed_data.Uint8List agentServiceDescriptor = $convert.base64Decode(
     'dlbnQudjEuTGlzdFByb3ZpZGVyc0NhdGFsb2dSZXF1ZXN0GiYuYWdlbnQudjEuTGlzdFByb3Zp'
     'ZGVyc0NhdGFsb2dSZXNwb25zZRJZChBSZWdpc3RlclByb3ZpZGVyEiEuYWdlbnQudjEuUmVnaX'
     'N0ZXJQcm92aWRlclJlcXVlc3QaIi5hZ2VudC52MS5SZWdpc3RlclByb3ZpZGVyUmVzcG9uc2US'
-    'aAoVRGlzY292ZXJHYXRld2F5TW9kZWxzEiYuYWdlbnQudjEuRGlzY292ZXJHYXRld2F5TW9kZW'
-    'xzUmVxdWVzdBonLmFnZW50LnYxLkRpc2NvdmVyR2F0ZXdheU1vZGVsc1Jlc3BvbnNlElMKDkRl'
-    'bGV0ZVByb3ZpZGVyEh8uYWdlbnQudjEuRGVsZXRlUHJvdmlkZXJSZXF1ZXN0GiAuYWdlbnQudj'
-    'EuRGVsZXRlUHJvdmlkZXJSZXNwb25zZRJNCgxUZXN0UHJvdmlkZXISHS5hZ2VudC52MS5UZXN0'
-    'UHJvdmlkZXJSZXF1ZXN0Gh4uYWdlbnQudjEuVGVzdFByb3ZpZGVyUmVzcG9uc2USRwoKTGlzdE'
-    '1vZGVscxIbLmFnZW50LnYxLkxpc3RNb2RlbHNSZXF1ZXN0GhwuYWdlbnQudjEuTGlzdE1vZGVs'
-    'c1Jlc3BvbnNlEkoKC0xpc3RQcmVzZXRzEhwuYWdlbnQudjEuTGlzdFByZXNldHNSZXF1ZXN0Gh'
-    '0uYWdlbnQudjEuTGlzdFByZXNldHNSZXNwb25zZRJNCgxVcHNlcnRQcmVzZXQSHS5hZ2VudC52'
-    'MS5VcHNlcnRQcmVzZXRSZXF1ZXN0Gh4uYWdlbnQudjEuVXBzZXJ0UHJlc2V0UmVzcG9uc2USTQ'
-    'oMRGVsZXRlUHJlc2V0Eh0uYWdlbnQudjEuRGVsZXRlUHJlc2V0UmVxdWVzdBoeLmFnZW50LnYx'
-    'LkRlbGV0ZVByZXNldFJlc3BvbnNlElAKDVByZXZpZXdQcmVzZXQSHi5hZ2VudC52MS5QcmV2aW'
-    'V3UHJlc2V0UmVxdWVzdBofLmFnZW50LnYxLlByZXZpZXdQcmVzZXRSZXNwb25zZRJECglHZXRD'
-    'b25maWcSGi5hZ2VudC52MS5HZXRDb25maWdSZXF1ZXN0GhsuYWdlbnQudjEuR2V0Q29uZmlnUm'
-    'VzcG9uc2USRAoJU2V0Q29uZmlnEhouYWdlbnQudjEuU2V0Q29uZmlnUmVxdWVzdBobLmFnZW50'
-    'LnYxLlNldENvbmZpZ1Jlc3BvbnNlEkQKCUxpc3RUb29scxIaLmFnZW50LnYxLkxpc3RUb29sc1'
-    'JlcXVlc3QaGy5hZ2VudC52MS5MaXN0VG9vbHNSZXNwb25zZRJQCg1HZXRUb29sQ29uZmlnEh4u'
-    'YWdlbnQudjEuR2V0VG9vbENvbmZpZ1JlcXVlc3QaHy5hZ2VudC52MS5HZXRUb29sQ29uZmlnUm'
-    'VzcG9uc2USUAoNU2V0VG9vbENvbmZpZxIeLmFnZW50LnYxLlNldFRvb2xDb25maWdSZXF1ZXN0'
-    'Gh8uYWdlbnQudjEuU2V0VG9vbENvbmZpZ1Jlc3BvbnNlEl8KElNldEV4dGVuc2lvbkNvbmZpZx'
-    'IjLmFnZW50LnYxLlNldEV4dGVuc2lvbkNvbmZpZ1JlcXVlc3QaJC5hZ2VudC52MS5TZXRFeHRl'
-    'bnNpb25Db25maWdSZXNwb25zZRJHCgpVcGxvYWRGaWxlEhsuYWdlbnQudjEuVXBsb2FkRmlsZV'
-    'JlcXVlc3QaHC5hZ2VudC52MS5VcGxvYWRGaWxlUmVzcG9uc2USRwoKSW5nZXN0RmlsZRIbLmFn'
-    'ZW50LnYxLkluZ2VzdEZpbGVSZXF1ZXN0GhwuYWdlbnQudjEuSW5nZXN0RmlsZVJlc3BvbnNlEj'
-    '4KB0dldEZpbGUSGC5hZ2VudC52MS5HZXRGaWxlUmVxdWVzdBoZLmFnZW50LnYxLkdldEZpbGVS'
-    'ZXNwb25zZRJKCgtHZXRGaWxlTWV0YRIcLmFnZW50LnYxLkdldEZpbGVNZXRhUmVxdWVzdBodLm'
-    'FnZW50LnYxLkdldEZpbGVNZXRhUmVzcG9uc2USUwoOR2V0QWdlbnRDb25maWcSHy5hZ2VudC52'
-    'MS5HZXRBZ2VudENvbmZpZ1JlcXVlc3QaIC5hZ2VudC52MS5HZXRBZ2VudENvbmZpZ1Jlc3Bvbn'
-    'Nl');
+    'UwoORGVsZXRlUHJvdmlkZXISHy5hZ2VudC52MS5EZWxldGVQcm92aWRlclJlcXVlc3QaIC5hZ2'
+    'VudC52MS5EZWxldGVQcm92aWRlclJlc3BvbnNlEk0KDFRlc3RQcm92aWRlchIdLmFnZW50LnYx'
+    'LlRlc3RQcm92aWRlclJlcXVlc3QaHi5hZ2VudC52MS5UZXN0UHJvdmlkZXJSZXNwb25zZRJHCg'
+    'pMaXN0TW9kZWxzEhsuYWdlbnQudjEuTGlzdE1vZGVsc1JlcXVlc3QaHC5hZ2VudC52MS5MaXN0'
+    'TW9kZWxzUmVzcG9uc2USSgoLTGlzdFByZXNldHMSHC5hZ2VudC52MS5MaXN0UHJlc2V0c1JlcX'
+    'Vlc3QaHS5hZ2VudC52MS5MaXN0UHJlc2V0c1Jlc3BvbnNlEk0KDFVwc2VydFByZXNldBIdLmFn'
+    'ZW50LnYxLlVwc2VydFByZXNldFJlcXVlc3QaHi5hZ2VudC52MS5VcHNlcnRQcmVzZXRSZXNwb2'
+    '5zZRJNCgxEZWxldGVQcmVzZXQSHS5hZ2VudC52MS5EZWxldGVQcmVzZXRSZXF1ZXN0Gh4uYWdl'
+    'bnQudjEuRGVsZXRlUHJlc2V0UmVzcG9uc2USUAoNUHJldmlld1ByZXNldBIeLmFnZW50LnYxLl'
+    'ByZXZpZXdQcmVzZXRSZXF1ZXN0Gh8uYWdlbnQudjEuUHJldmlld1ByZXNldFJlc3BvbnNlEkQK'
+    'CUdldENvbmZpZxIaLmFnZW50LnYxLkdldENvbmZpZ1JlcXVlc3QaGy5hZ2VudC52MS5HZXRDb2'
+    '5maWdSZXNwb25zZRJECglTZXRDb25maWcSGi5hZ2VudC52MS5TZXRDb25maWdSZXF1ZXN0Ghsu'
+    'YWdlbnQudjEuU2V0Q29uZmlnUmVzcG9uc2USRAoJTGlzdFRvb2xzEhouYWdlbnQudjEuTGlzdF'
+    'Rvb2xzUmVxdWVzdBobLmFnZW50LnYxLkxpc3RUb29sc1Jlc3BvbnNlElAKDUdldFRvb2xDb25m'
+    'aWcSHi5hZ2VudC52MS5HZXRUb29sQ29uZmlnUmVxdWVzdBofLmFnZW50LnYxLkdldFRvb2xDb2'
+    '5maWdSZXNwb25zZRJQCg1TZXRUb29sQ29uZmlnEh4uYWdlbnQudjEuU2V0VG9vbENvbmZpZ1Jl'
+    'cXVlc3QaHy5hZ2VudC52MS5TZXRUb29sQ29uZmlnUmVzcG9uc2USXwoSU2V0RXh0ZW5zaW9uQ2'
+    '9uZmlnEiMuYWdlbnQudjEuU2V0RXh0ZW5zaW9uQ29uZmlnUmVxdWVzdBokLmFnZW50LnYxLlNl'
+    'dEV4dGVuc2lvbkNvbmZpZ1Jlc3BvbnNlEkcKClVwbG9hZEZpbGUSGy5hZ2VudC52MS5VcGxvYW'
+    'RGaWxlUmVxdWVzdBocLmFnZW50LnYxLlVwbG9hZEZpbGVSZXNwb25zZRJHCgpJbmdlc3RGaWxl'
+    'EhsuYWdlbnQudjEuSW5nZXN0RmlsZVJlcXVlc3QaHC5hZ2VudC52MS5Jbmdlc3RGaWxlUmVzcG'
+    '9uc2USPgoHR2V0RmlsZRIYLmFnZW50LnYxLkdldEZpbGVSZXF1ZXN0GhkuYWdlbnQudjEuR2V0'
+    'RmlsZVJlc3BvbnNlEkoKC0dldEZpbGVNZXRhEhwuYWdlbnQudjEuR2V0RmlsZU1ldGFSZXF1ZX'
+    'N0Gh0uYWdlbnQudjEuR2V0RmlsZU1ldGFSZXNwb25zZRJTCg5HZXRBZ2VudENvbmZpZxIfLmFn'
+    'ZW50LnYxLkdldEFnZW50Q29uZmlnUmVxdWVzdBogLmFnZW50LnYxLkdldEFnZW50Q29uZmlnUm'
+    'VzcG9uc2U=');
 
 const $core.Map<$core.String, $core.dynamic> AdminServiceBase$json = {
   '1': 'AdminService',

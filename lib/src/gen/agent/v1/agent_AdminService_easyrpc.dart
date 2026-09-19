@@ -6,54 +6,72 @@ import 'package:agent_client_sdk/src/gen/agent/v1/agent.pb.dart' as m;
 class AdminServiceClient {
   final Transport _t;
   AdminServiceClient(this._t);
-  Request _req(String url, [Uint8List? body]) => Request(url: url, method: 'POST', body: body);
+  Request _req(String url, [Uint8List? body]) => Request(url: url, body: body);
+  Headers lastTrailers = const {};
+  RpcStream? lastStream;
 
-  Future<m.ListTenantsResponse> listTenants(m.ListTenantsRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/ListTenants', req.writeToBuffer()));
+  Future<m.ListTenantsResponse> listTenants(m.ListTenantsRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/ListTenants', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListTenantsResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListTenantsResponse>(res.body!, () => m.ListTenantsResponse(), kind);
   }
 
-  Future<m.CreateTenantResponse> createTenant(m.CreateTenantRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/CreateTenant', req.writeToBuffer()));
+  Future<m.CreateTenantResponse> createTenant(m.CreateTenantRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/CreateTenant', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.CreateTenantResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.CreateTenantResponse>(res.body!, () => m.CreateTenantResponse(), kind);
   }
 
-  Future<m.UpdateTenantResponse> updateTenant(m.UpdateTenantRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/UpdateTenant', req.writeToBuffer()));
+  Future<m.UpdateTenantResponse> updateTenant(m.UpdateTenantRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/UpdateTenant', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.UpdateTenantResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.UpdateTenantResponse>(res.body!, () => m.UpdateTenantResponse(), kind);
   }
 
-  Future<m.DeleteTenantResponse> deleteTenant(m.DeleteTenantRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/DeleteTenant', req.writeToBuffer()));
+  Future<m.DeleteTenantResponse> deleteTenant(m.DeleteTenantRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/DeleteTenant', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.DeleteTenantResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.DeleteTenantResponse>(res.body!, () => m.DeleteTenantResponse(), kind);
   }
 
-  Future<m.IssueTenantTokenResponse> issueTenantToken(m.IssueTenantTokenRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/IssueTenantToken', req.writeToBuffer()));
+  Future<m.IssueTenantTokenResponse> issueTenantToken(m.IssueTenantTokenRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/IssueTenantToken', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.IssueTenantTokenResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.IssueTenantTokenResponse>(res.body!, () => m.IssueTenantTokenResponse(), kind);
   }
 
-  Future<m.ListTenantTokensResponse> listTenantTokens(m.ListTenantTokensRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/ListTenantTokens', req.writeToBuffer()));
+  Future<m.ListTenantTokensResponse> listTenantTokens(m.ListTenantTokensRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/ListTenantTokens', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.ListTenantTokensResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.ListTenantTokensResponse>(res.body!, () => m.ListTenantTokensResponse(), kind);
   }
 
-  Future<m.RevokeTenantTokenResponse> revokeTenantToken(m.RevokeTenantTokenRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/RevokeTenantToken', req.writeToBuffer()));
+  Future<m.RevokeTenantTokenResponse> revokeTenantToken(m.RevokeTenantTokenRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/RevokeTenantToken', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.RevokeTenantTokenResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.RevokeTenantTokenResponse>(res.body!, () => m.RevokeTenantTokenResponse(), kind);
   }
 
-  Future<m.RotateTenantTokenResponse> rotateTenantToken(m.RotateTenantTokenRequest req) async {
-    final res = await _t.send(_req('/agent.v1.AdminService/RotateTenantToken', req.writeToBuffer()));
+  Future<m.RotateTenantTokenResponse> rotateTenantToken(m.RotateTenantTokenRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AdminService/RotateTenantToken', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
     if (res.error != null) throw res.error!;
-    return m.RotateTenantTokenResponse.fromBuffer(res.body!);
+    lastTrailers = res.trailers;
+    return decodeMsg<m.RotateTenantTokenResponse>(res.body!, () => m.RotateTenantTokenResponse(), kind);
   }
 
 }
