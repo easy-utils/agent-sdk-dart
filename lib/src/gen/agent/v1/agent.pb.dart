@@ -1744,18 +1744,19 @@ class WatchSessionsResponse extends $pb.GeneratedMessage {
   void clearSnapshot() => $_clearField(3);
 }
 
-/// A file reference (attachment).
+/// A file reference (attachment). `mime` is NOT carried: the agent DERIVES the
+/// content type from the bytes at ingest time (magic-byte sniff + media probe)
+/// and resolves it from the stored record, so a caller can neither mislabel a
+/// file nor need a content-type library of its own.
 class FileRef extends $pb.GeneratedMessage {
   factory FileRef({
     $core.String? code,
     $core.String? name,
-    $core.String? mime,
     $core.int? size,
   }) {
     final result = FileRef._();
     if (code != null) result.code = code;
     if (name != null) result.name = name;
-    if (mime != null) result.mime = mime;
     if (size != null) result.size = size;
     return result;
   }
@@ -1775,7 +1776,6 @@ class FileRef extends $pb.GeneratedMessage {
       createEmptyInstance: FileRef.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'code')
     ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOS(3, _omitFieldNames ? '' : 'mime')
     ..aI(4, _omitFieldNames ? '' : 'size')
     ..hasRequiredFields = false;
 
@@ -1817,21 +1817,12 @@ class FileRef extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
 
-  @$pb.TagNumber(3)
-  $core.String get mime => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set mime($core.String value) => $_setString(2, value);
-  @$pb.TagNumber(3)
-  $core.bool hasMime() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearMime() => $_clearField(3);
-
   @$pb.TagNumber(4)
-  $core.int get size => $_getIZ(3);
+  $core.int get size => $_getIZ(2);
   @$pb.TagNumber(4)
-  set size($core.int value) => $_setSignedInt32(3, value);
+  set size($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(4)
-  $core.bool hasSize() => $_has(3);
+  $core.bool hasSize() => $_has(2);
   @$pb.TagNumber(4)
   void clearSize() => $_clearField(4);
 }
@@ -6175,14 +6166,18 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   void clearData() => $_clearField(2);
 }
 
+/// `mime` is the SERVER-DERIVED content type of the stored file (see
+/// IngestFileResponse); the caller never supplies one.
 class UploadFileResponse extends $pb.GeneratedMessage {
   factory UploadFileResponse({
     $core.bool? ok,
     $core.String? code,
+    $core.String? mime,
   }) {
     final result = UploadFileResponse._();
     if (ok != null) result.ok = ok;
     if (code != null) result.code = code;
+    if (mime != null) result.mime = mime;
     return result;
   }
 
@@ -6201,6 +6196,7 @@ class UploadFileResponse extends $pb.GeneratedMessage {
       createEmptyInstance: UploadFileResponse.$_createMessage)
     ..aOB(1, _omitFieldNames ? '' : 'ok')
     ..aOS(2, _omitFieldNames ? '' : 'code')
+    ..aOS(3, _omitFieldNames ? '' : 'mime')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -6242,6 +6238,15 @@ class UploadFileResponse extends $pb.GeneratedMessage {
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
   void clearCode() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mime => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mime($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMime() => $_clearField(3);
 }
 
 class IngestFileRequest extends $pb.GeneratedMessage {
@@ -6249,13 +6254,11 @@ class IngestFileRequest extends $pb.GeneratedMessage {
     $core.String? code,
     $core.List<$core.int>? data,
     $core.String? name,
-    $core.String? mime,
   }) {
     final result = IngestFileRequest._();
     if (code != null) result.code = code;
     if (data != null) result.data = data;
     if (name != null) result.name = name;
-    if (mime != null) result.mime = mime;
     return result;
   }
 
@@ -6276,7 +6279,6 @@ class IngestFileRequest extends $pb.GeneratedMessage {
     ..a<$core.List<$core.int>>(
         2, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
     ..aOS(3, _omitFieldNames ? '' : 'name')
-    ..aOS(4, _omitFieldNames ? '' : 'mime')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -6327,25 +6329,21 @@ class IngestFileRequest extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(2);
   @$pb.TagNumber(3)
   void clearName() => $_clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get mime => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set mime($core.String value) => $_setString(3, value);
-  @$pb.TagNumber(4)
-  $core.bool hasMime() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearMime() => $_clearField(4);
 }
 
+/// `mime` is the content type the agent DERIVED from the bytes (magic-byte
+/// sniff, with an ffprobe refinement for media). It is authoritative: clients
+/// render from it rather than asserting their own guess.
 class IngestFileResponse extends $pb.GeneratedMessage {
   factory IngestFileResponse({
     $core.bool? ok,
     $core.String? code,
+    $core.String? mime,
   }) {
     final result = IngestFileResponse._();
     if (ok != null) result.ok = ok;
     if (code != null) result.code = code;
+    if (mime != null) result.mime = mime;
     return result;
   }
 
@@ -6364,6 +6362,7 @@ class IngestFileResponse extends $pb.GeneratedMessage {
       createEmptyInstance: IngestFileResponse.$_createMessage)
     ..aOB(1, _omitFieldNames ? '' : 'ok')
     ..aOS(2, _omitFieldNames ? '' : 'code')
+    ..aOS(3, _omitFieldNames ? '' : 'mime')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -6405,6 +6404,15 @@ class IngestFileResponse extends $pb.GeneratedMessage {
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
   void clearCode() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mime => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mime($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasMime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMime() => $_clearField(3);
 }
 
 class GetFileRequest extends $pb.GeneratedMessage {
@@ -6603,16 +6611,33 @@ class GetFileMetaRequest extends $pb.GeneratedMessage {
   void clearCode() => $_clearField(1);
 }
 
+/// File metadata: identity + server-derived media facts. The optional media
+/// fields are populated (asynchronously, best-effort) by the agent's media
+/// probe when the mime is a supported image/video/audio type; they are absent
+/// (field presence unset) for files that are not media or were probed before
+/// the feature existed. `thumb_code` is itself a canonical file code (the
+/// thumbnail is a content-addressed file), so a client fetches it through the
+/// normal GetFile/GetFileStream path.
 class GetFileMetaResponse extends $pb.GeneratedMessage {
   factory GetFileMetaResponse({
     $core.String? name,
     $core.String? mime,
     $core.int? size,
+    $core.int? width,
+    $core.int? height,
+    $fixnum.Int64? durationMs,
+    $core.String? thumbCode,
+    $core.String? thumbhash,
   }) {
     final result = GetFileMetaResponse._();
     if (name != null) result.name = name;
     if (mime != null) result.mime = mime;
     if (size != null) result.size = size;
+    if (width != null) result.width = width;
+    if (height != null) result.height = height;
+    if (durationMs != null) result.durationMs = durationMs;
+    if (thumbCode != null) result.thumbCode = thumbCode;
+    if (thumbhash != null) result.thumbhash = thumbhash;
     return result;
   }
 
@@ -6632,6 +6657,11 @@ class GetFileMetaResponse extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'mime')
     ..aI(3, _omitFieldNames ? '' : 'size')
+    ..aI(4, _omitFieldNames ? '' : 'width')
+    ..aI(5, _omitFieldNames ? '' : 'height')
+    ..aInt64(6, _omitFieldNames ? '' : 'durationMs')
+    ..aOS(7, _omitFieldNames ? '' : 'thumbCode')
+    ..aOS(8, _omitFieldNames ? '' : 'thumbhash')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -6683,6 +6713,151 @@ class GetFileMetaResponse extends $pb.GeneratedMessage {
   $core.bool hasSize() => $_has(2);
   @$pb.TagNumber(3)
   void clearSize() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get width => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set width($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasWidth() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWidth() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get height => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set height($core.int value) => $_setSignedInt32(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasHeight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearHeight() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get durationMs => $_getI64(5);
+  @$pb.TagNumber(6)
+  set durationMs($fixnum.Int64 value) => $_setInt64(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasDurationMs() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearDurationMs() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get thumbCode => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set thumbCode($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasThumbCode() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearThumbCode() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get thumbhash => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set thumbhash($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasThumbhash() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearThumbhash() => $_clearField(8);
+}
+
+/// GetFileStream streams a file's bytes in order (chunk by chunk). It is the
+/// streaming counterpart of GetFile: small files still round-trip fine, while
+/// large media is delivered progressively so a client can start rendering
+/// before the whole object has arrived. Without a `Range` API this is a
+/// forward-only stream (no seek); `offset` is the byte offset of `data` in the
+/// file and `total` its full length, so a client can compute progress.
+class FileChunk extends $pb.GeneratedMessage {
+  factory FileChunk({
+    $core.List<$core.int>? data,
+    $fixnum.Int64? offset,
+    $fixnum.Int64? total,
+    $core.bool? last,
+  }) {
+    final result = FileChunk._();
+    if (data != null) result.data = data;
+    if (offset != null) result.offset = offset;
+    if (total != null) result.total = total;
+    if (last != null) result.last = last;
+    return result;
+  }
+
+  FileChunk._();
+
+  factory FileChunk.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      FileChunk()..mergeFromBuffer(data, registry);
+  factory FileChunk.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      FileChunk()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'FileChunk',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
+      createEmptyInstance: FileChunk.$_createMessage)
+    ..a<$core.List<$core.int>>(
+        1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'offset', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'total', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOB(4, _omitFieldNames ? '' : 'last')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FileChunk clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FileChunk copyWith(void Function(FileChunk) updates) =>
+      super.copyWith((message) => updates(message as FileChunk)) as FileChunk;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use FileChunk() / FileChunk.new instead')
+  static FileChunk create() => FileChunk._();
+  static $pb.GeneratedMessage $_createMessage() => FileChunk._();
+  @$core.override
+  FileChunk createEmptyInstance() => FileChunk._();
+  @$core.pragma('dart2js:noInline')
+  static FileChunk getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FileChunk>(FileChunk.$_createMessage);
+  static FileChunk? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get data => $_getN(0);
+  @$pb.TagNumber(1)
+  set data($core.List<$core.int> value) => $_setBytes(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasData() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearData() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get offset => $_getI64(1);
+  @$pb.TagNumber(2)
+  set offset($fixnum.Int64 value) => $_setInt64(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasOffset() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearOffset() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get total => $_getI64(2);
+  @$pb.TagNumber(3)
+  set total($fixnum.Int64 value) => $_setInt64(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasTotal() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTotal() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.bool get last => $_getBF(3);
+  @$pb.TagNumber(4)
+  set last($core.bool value) => $_setBool(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasLast() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearLast() => $_clearField(4);
 }
 
 class GetAgentConfigRequest extends $pb.GeneratedMessage {
@@ -8301,6 +8476,10 @@ class AgentServiceApi {
           $pb.ClientContext? ctx, GetFileMetaRequest request) =>
       _client.invoke<GetFileMetaResponse>(
           ctx, 'AgentService', 'GetFileMeta', request, GetFileMetaResponse());
+  $async.Future<FileChunk> getFileStream(
+          $pb.ClientContext? ctx, GetFileRequest request) =>
+      _client.invoke<FileChunk>(
+          ctx, 'AgentService', 'GetFileStream', request, FileChunk());
   $async.Future<GetAgentConfigResponse> getAgentConfig(
           $pb.ClientContext? ctx, GetAgentConfigRequest request) =>
       _client.invoke<GetAgentConfigResponse>(ctx, 'AgentService',

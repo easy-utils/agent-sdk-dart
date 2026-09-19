@@ -311,6 +311,13 @@ class AgentServiceClient {
     return decodeMsg<m.GetFileMetaResponse>(res.body!, () => m.GetFileMetaResponse(), kind);
   }
 
+  Stream<m.FileChunk> getFileStream(m.GetFileRequest req, {String kind = 'proto'}) async* {
+    final ct = contentTypeFor(true, kind);
+    final st = await _t.openStream(Request(url: '/agent.v1.AgentService/GetFileStream', headers: {'content-type': [ct]}, body: Uint8List.fromList(frame(encodeMsg(req, kind)))));
+    lastStream = st;
+    await for (final chunk in st.messages) { yield decodeMsg<m.FileChunk>(chunk, () => m.FileChunk(), kind); }
+  }
+
   Future<m.GetAgentConfigResponse> getAgentConfig(m.GetAgentConfigRequest req, {String kind = 'proto'}) async {
     final ct = contentTypeFor(false, kind);
     final res = await _t.send(Request(url: '/agent.v1.AgentService/GetAgentConfig', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));

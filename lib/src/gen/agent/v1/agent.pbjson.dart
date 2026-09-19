@@ -456,15 +456,17 @@ const FileRef$json = {
   '2': [
     {'1': 'code', '3': 1, '4': 1, '5': 9, '10': 'code'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'mime', '3': 3, '4': 1, '5': 9, '10': 'mime'},
     {'1': 'size', '3': 4, '4': 1, '5': 5, '10': 'size'},
+  ],
+  '9': [
+    {'1': 3, '2': 4},
   ],
 };
 
 /// Descriptor for `FileRef`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fileRefDescriptor = $convert.base64Decode(
-    'CgdGaWxlUmVmEhIKBGNvZGUYASABKAlSBGNvZGUSEgoEbmFtZRgCIAEoCVIEbmFtZRISCgRtaW'
-    '1lGAMgASgJUgRtaW1lEhIKBHNpemUYBCABKAVSBHNpemU=');
+    'CgdGaWxlUmVmEhIKBGNvZGUYASABKAlSBGNvZGUSEgoEbmFtZRgCIAEoCVIEbmFtZRISCgRzaX'
+    'plGAQgASgFUgRzaXplSgQIAxAE');
 
 @$core.Deprecated('Use listSessionsRequestDescriptor instead')
 const ListSessionsRequest$json = {
@@ -1535,13 +1537,14 @@ const UploadFileResponse$json = {
   '2': [
     {'1': 'ok', '3': 1, '4': 1, '5': 8, '10': 'ok'},
     {'1': 'code', '3': 2, '4': 1, '5': 9, '10': 'code'},
+    {'1': 'mime', '3': 3, '4': 1, '5': 9, '10': 'mime'},
   ],
 };
 
 /// Descriptor for `UploadFileResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List uploadFileResponseDescriptor = $convert.base64Decode(
     'ChJVcGxvYWRGaWxlUmVzcG9uc2USDgoCb2sYASABKAhSAm9rEhIKBGNvZGUYAiABKAlSBGNvZG'
-    'U=');
+    'USEgoEbWltZRgDIAEoCVIEbWltZQ==');
 
 @$core.Deprecated('Use ingestFileRequestDescriptor instead')
 const IngestFileRequest$json = {
@@ -1550,14 +1553,16 @@ const IngestFileRequest$json = {
     {'1': 'code', '3': 1, '4': 1, '5': 9, '10': 'code'},
     {'1': 'data', '3': 2, '4': 1, '5': 12, '10': 'data'},
     {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'mime', '3': 4, '4': 1, '5': 9, '10': 'mime'},
+  ],
+  '9': [
+    {'1': 4, '2': 5},
   ],
 };
 
 /// Descriptor for `IngestFileRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List ingestFileRequestDescriptor = $convert.base64Decode(
     'ChFJbmdlc3RGaWxlUmVxdWVzdBISCgRjb2RlGAEgASgJUgRjb2RlEhIKBGRhdGEYAiABKAxSBG'
-    'RhdGESEgoEbmFtZRgDIAEoCVIEbmFtZRISCgRtaW1lGAQgASgJUgRtaW1l');
+    'RhdGESEgoEbmFtZRgDIAEoCVIEbmFtZUoECAQQBQ==');
 
 @$core.Deprecated('Use ingestFileResponseDescriptor instead')
 const IngestFileResponse$json = {
@@ -1565,13 +1570,14 @@ const IngestFileResponse$json = {
   '2': [
     {'1': 'ok', '3': 1, '4': 1, '5': 8, '10': 'ok'},
     {'1': 'code', '3': 2, '4': 1, '5': 9, '10': 'code'},
+    {'1': 'mime', '3': 3, '4': 1, '5': 9, '10': 'mime'},
   ],
 };
 
 /// Descriptor for `IngestFileResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List ingestFileResponseDescriptor = $convert.base64Decode(
     'ChJJbmdlc3RGaWxlUmVzcG9uc2USDgoCb2sYASABKAhSAm9rEhIKBGNvZGUYAiABKAlSBGNvZG'
-    'U=');
+    'USEgoEbWltZRgDIAEoCVIEbWltZQ==');
 
 @$core.Deprecated('Use getFileRequestDescriptor instead')
 const GetFileRequest$json = {
@@ -1619,13 +1625,69 @@ const GetFileMetaResponse$json = {
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'mime', '3': 2, '4': 1, '5': 9, '10': 'mime'},
     {'1': 'size', '3': 3, '4': 1, '5': 5, '10': 'size'},
+    {'1': 'width', '3': 4, '4': 1, '5': 5, '9': 0, '10': 'width', '17': true},
+    {'1': 'height', '3': 5, '4': 1, '5': 5, '9': 1, '10': 'height', '17': true},
+    {
+      '1': 'duration_ms',
+      '3': 6,
+      '4': 1,
+      '5': 3,
+      '9': 2,
+      '10': 'durationMs',
+      '17': true
+    },
+    {
+      '1': 'thumb_code',
+      '3': 7,
+      '4': 1,
+      '5': 9,
+      '9': 3,
+      '10': 'thumbCode',
+      '17': true
+    },
+    {
+      '1': 'thumbhash',
+      '3': 8,
+      '4': 1,
+      '5': 9,
+      '9': 4,
+      '10': 'thumbhash',
+      '17': true
+    },
+  ],
+  '8': [
+    {'1': '_width'},
+    {'1': '_height'},
+    {'1': '_duration_ms'},
+    {'1': '_thumb_code'},
+    {'1': '_thumbhash'},
   ],
 };
 
 /// Descriptor for `GetFileMetaResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getFileMetaResponseDescriptor = $convert.base64Decode(
     'ChNHZXRGaWxlTWV0YVJlc3BvbnNlEhIKBG5hbWUYASABKAlSBG5hbWUSEgoEbWltZRgCIAEoCV'
-    'IEbWltZRISCgRzaXplGAMgASgFUgRzaXpl');
+    'IEbWltZRISCgRzaXplGAMgASgFUgRzaXplEhkKBXdpZHRoGAQgASgFSABSBXdpZHRoiAEBEhsK'
+    'BmhlaWdodBgFIAEoBUgBUgZoZWlnaHSIAQESJAoLZHVyYXRpb25fbXMYBiABKANIAlIKZHVyYX'
+    'Rpb25Nc4gBARIiCgp0aHVtYl9jb2RlGAcgASgJSANSCXRodW1iQ29kZYgBARIhCgl0aHVtYmhh'
+    'c2gYCCABKAlIBFIJdGh1bWJoYXNoiAEBQggKBl93aWR0aEIJCgdfaGVpZ2h0Qg4KDF9kdXJhdG'
+    'lvbl9tc0INCgtfdGh1bWJfY29kZUIMCgpfdGh1bWJoYXNo');
+
+@$core.Deprecated('Use fileChunkDescriptor instead')
+const FileChunk$json = {
+  '1': 'FileChunk',
+  '2': [
+    {'1': 'data', '3': 1, '4': 1, '5': 12, '10': 'data'},
+    {'1': 'offset', '3': 2, '4': 1, '5': 4, '10': 'offset'},
+    {'1': 'total', '3': 3, '4': 1, '5': 4, '10': 'total'},
+    {'1': 'last', '3': 4, '4': 1, '5': 8, '10': 'last'},
+  ],
+};
+
+/// Descriptor for `FileChunk`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fileChunkDescriptor = $convert.base64Decode(
+    'CglGaWxlQ2h1bmsSEgoEZGF0YRgBIAEoDFIEZGF0YRIWCgZvZmZzZXQYAiABKARSBm9mZnNldB'
+    'IUCgV0b3RhbBgDIAEoBFIFdG90YWwSEgoEbGFzdBgEIAEoCFIEbGFzdA==');
 
 @$core.Deprecated('Use getAgentConfigRequestDescriptor instead')
 const GetAgentConfigRequest$json = {
@@ -2174,6 +2236,12 @@ const $core.Map<$core.String, $core.dynamic> AgentServiceBase$json = {
       '3': '.agent.v1.GetFileMetaResponse'
     },
     {
+      '1': 'GetFileStream',
+      '2': '.agent.v1.GetFileRequest',
+      '3': '.agent.v1.FileChunk',
+      '6': true
+    },
+    {
       '1': 'GetAgentConfig',
       '2': '.agent.v1.GetAgentConfigRequest',
       '3': '.agent.v1.GetAgentConfigResponse'
@@ -2283,6 +2351,7 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
   '.agent.v1.GetFileResponse': GetFileResponse$json,
   '.agent.v1.GetFileMetaRequest': GetFileMetaRequest$json,
   '.agent.v1.GetFileMetaResponse': GetFileMetaResponse$json,
+  '.agent.v1.FileChunk': FileChunk$json,
   '.agent.v1.GetAgentConfigRequest': GetAgentConfigRequest$json,
   '.agent.v1.GetAgentConfigResponse': GetAgentConfigResponse$json,
 };
@@ -2340,9 +2409,10 @@ final $typed_data.Uint8List agentServiceDescriptor = $convert.base64Decode(
     'EhsuYWdlbnQudjEuSW5nZXN0RmlsZVJlcXVlc3QaHC5hZ2VudC52MS5Jbmdlc3RGaWxlUmVzcG'
     '9uc2USPgoHR2V0RmlsZRIYLmFnZW50LnYxLkdldEZpbGVSZXF1ZXN0GhkuYWdlbnQudjEuR2V0'
     'RmlsZVJlc3BvbnNlEkoKC0dldEZpbGVNZXRhEhwuYWdlbnQudjEuR2V0RmlsZU1ldGFSZXF1ZX'
-    'N0Gh0uYWdlbnQudjEuR2V0RmlsZU1ldGFSZXNwb25zZRJTCg5HZXRBZ2VudENvbmZpZxIfLmFn'
-    'ZW50LnYxLkdldEFnZW50Q29uZmlnUmVxdWVzdBogLmFnZW50LnYxLkdldEFnZW50Q29uZmlnUm'
-    'VzcG9uc2U=');
+    'N0Gh0uYWdlbnQudjEuR2V0RmlsZU1ldGFSZXNwb25zZRJACg1HZXRGaWxlU3RyZWFtEhguYWdl'
+    'bnQudjEuR2V0RmlsZVJlcXVlc3QaEy5hZ2VudC52MS5GaWxlQ2h1bmswARJTCg5HZXRBZ2VudE'
+    'NvbmZpZxIfLmFnZW50LnYxLkdldEFnZW50Q29uZmlnUmVxdWVzdBogLmFnZW50LnYxLkdldEFn'
+    'ZW50Q29uZmlnUmVzcG9uc2U=');
 
 const $core.Map<$core.String, $core.dynamic> AdminServiceBase$json = {
   '1': 'AdminService',

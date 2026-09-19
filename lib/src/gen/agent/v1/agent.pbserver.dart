@@ -97,6 +97,8 @@ abstract class AgentServiceBase extends $pb.GeneratedService {
       $pb.ServerContext ctx, $1.GetFileRequest request);
   $async.Future<$1.GetFileMetaResponse> getFileMeta(
       $pb.ServerContext ctx, $1.GetFileMetaRequest request);
+  $async.Future<$1.FileChunk> getFileStream(
+      $pb.ServerContext ctx, $1.GetFileRequest request);
   $async.Future<$1.GetAgentConfigResponse> getAgentConfig(
       $pb.ServerContext ctx, $1.GetAgentConfigRequest request);
 
@@ -178,6 +180,8 @@ abstract class AgentServiceBase extends $pb.GeneratedService {
         return $1.GetFileRequest();
       case 'GetFileMeta':
         return $1.GetFileMetaRequest();
+      case 'GetFileStream':
+        return $1.GetFileRequest();
       case 'GetAgentConfig':
         return $1.GetAgentConfigRequest();
       default:
@@ -265,6 +269,8 @@ abstract class AgentServiceBase extends $pb.GeneratedService {
         return getFile(ctx, request as $1.GetFileRequest);
       case 'GetFileMeta':
         return getFileMeta(ctx, request as $1.GetFileMetaRequest);
+      case 'GetFileStream':
+        return getFileStream(ctx, request as $1.GetFileRequest);
       case 'GetAgentConfig':
         return getAgentConfig(ctx, request as $1.GetAgentConfigRequest);
       default:
