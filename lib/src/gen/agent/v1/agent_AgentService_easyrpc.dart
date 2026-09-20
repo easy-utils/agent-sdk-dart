@@ -18,6 +18,14 @@ class AgentServiceClient {
     return decodeMsg<m.HealthResponse>(res.body!, () => m.HealthResponse(), kind);
   }
 
+  Future<m.GetIdentityResponse> getIdentity(m.GetIdentityRequest req, {String kind = 'proto'}) async {
+    final ct = contentTypeFor(false, kind);
+    final res = await _t.send(Request(url: '/agent.v1.AgentService/GetIdentity', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));
+    if (res.error != null) throw res.error!;
+    lastTrailers = res.trailers;
+    return decodeMsg<m.GetIdentityResponse>(res.body!, () => m.GetIdentityResponse(), kind);
+  }
+
   Future<m.ListSessionsResponse> listSessions(m.ListSessionsRequest req, {String kind = 'proto'}) async {
     final ct = contentTypeFor(false, kind);
     final res = await _t.send(Request(url: '/agent.v1.AgentService/ListSessions', headers: {'content-type': [ct]}, body: Uint8List.fromList(encodeMsg(req, kind))));

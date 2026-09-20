@@ -23,6 +23,8 @@ export 'agent.pb.dart';
 abstract class AgentServiceBase extends $pb.GeneratedService {
   $async.Future<$1.HealthResponse> health(
       $pb.ServerContext ctx, $1.HealthRequest request);
+  $async.Future<$1.GetIdentityResponse> getIdentity(
+      $pb.ServerContext ctx, $1.GetIdentityRequest request);
   $async.Future<$1.ListSessionsResponse> listSessions(
       $pb.ServerContext ctx, $1.ListSessionsRequest request);
   $async.Future<$1.CreateSessionResponse> createSession(
@@ -106,6 +108,8 @@ abstract class AgentServiceBase extends $pb.GeneratedService {
     switch (methodName) {
       case 'Health':
         return $1.HealthRequest();
+      case 'GetIdentity':
+        return $1.GetIdentityRequest();
       case 'ListSessions':
         return $1.ListSessionsRequest();
       case 'CreateSession':
@@ -194,6 +198,8 @@ abstract class AgentServiceBase extends $pb.GeneratedService {
     switch (methodName) {
       case 'Health':
         return health(ctx, request as $1.HealthRequest);
+      case 'GetIdentity':
+        return getIdentity(ctx, request as $1.GetIdentityRequest);
       case 'ListSessions':
         return listSessions(ctx, request as $1.ListSessionsRequest);
       case 'CreateSession':

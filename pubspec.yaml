@@ -1,6 +1,6 @@
 name: agent_client_sdk
 description: "Agent typed client SDK for Dart/Flutter over easy-rpc (agent.v1.AgentService)."
-version: 0.16.4
+version: 0.17.0
 publish_to: 'none'
 
 environment:

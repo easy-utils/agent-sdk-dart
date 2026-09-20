@@ -959,7 +959,7 @@ class Provider extends $pb.GeneratedMessage {
   void clearUpdatedAt() => $_clearField(7);
 
   /// The single modality this provider serves (text | image | video | speech |
-  /// transcription | embedding | rerank | realtime). New field (no renumber).
+  /// transcription | embedding | rerank | realtime).
   @$pb.TagNumber(8)
   $core.String get capability => $_getSZ(7);
   @$pb.TagNumber(8)
@@ -971,8 +971,8 @@ class Provider extends $pb.GeneratedMessage {
 }
 
 /// Provider model entry. All of a provider's models share the provider's
-/// `capability`; `model_type` mirrors it (kept for wire compatibility and for
-/// clients that read the model directly).
+/// `capability`; `model_type` mirrors it so a client can read the modality
+/// directly from the model.
 ///
 ///   - text      -> context_limit (> 0) REQUIRED (drives compaction budgets)
 ///   - non-text  -> context_limit MUST be 0 (not a chat model)
@@ -1776,7 +1776,7 @@ class FileRef extends $pb.GeneratedMessage {
       createEmptyInstance: FileRef.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'code')
     ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aI(4, _omitFieldNames ? '' : 'size')
+    ..aI(3, _omitFieldNames ? '' : 'size')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1817,14 +1817,14 @@ class FileRef extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
 
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
   $core.int get size => $_getIZ(2);
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
   set size($core.int value) => $_setSignedInt32(2, value);
-  @$pb.TagNumber(4)
+  @$pb.TagNumber(3)
   $core.bool hasSize() => $_has(2);
-  @$pb.TagNumber(4)
-  void clearSize() => $_clearField(4);
+  @$pb.TagNumber(3)
+  void clearSize() => $_clearField(3);
 }
 
 class ListSessionsRequest extends $pb.GeneratedMessage {
@@ -3445,21 +3445,15 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? model,
     $core.String? preset,
-    $core.int? maxTurns,
-    $core.String? systemPrompt,
     $core.String? locale,
     $core.String? variant,
-    $core.String? group,
   }) {
     final result = UpdateSettingsRequest._();
     if (id != null) result.id = id;
     if (model != null) result.model = model;
     if (preset != null) result.preset = preset;
-    if (maxTurns != null) result.maxTurns = maxTurns;
-    if (systemPrompt != null) result.systemPrompt = systemPrompt;
     if (locale != null) result.locale = locale;
     if (variant != null) result.variant = variant;
-    if (group != null) result.group = group;
     return result;
   }
 
@@ -3479,11 +3473,8 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'model')
     ..aOS(3, _omitFieldNames ? '' : 'preset')
-    ..aI(4, _omitFieldNames ? '' : 'maxTurns')
-    ..aOS(5, _omitFieldNames ? '' : 'systemPrompt')
-    ..aOS(6, _omitFieldNames ? '' : 'locale')
-    ..aOS(7, _omitFieldNames ? '' : 'variant')
-    ..aOS(8, _omitFieldNames ? '' : 'group')
+    ..aOS(4, _omitFieldNames ? '' : 'locale')
+    ..aOS(5, _omitFieldNames ? '' : 'variant')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -3537,55 +3528,24 @@ class UpdateSettingsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearPreset() => $_clearField(3);
 
-  /// Optional: omitted means "inherit (preset / default)"; an explicit value
-  /// must be > 0 (0 is rejected).
   @$pb.TagNumber(4)
-  $core.int get maxTurns => $_getIZ(3);
+  $core.String get locale => $_getSZ(3);
   @$pb.TagNumber(4)
-  set maxTurns($core.int value) => $_setSignedInt32(3, value);
+  set locale($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
-  $core.bool hasMaxTurns() => $_has(3);
+  $core.bool hasLocale() => $_has(3);
   @$pb.TagNumber(4)
-  void clearMaxTurns() => $_clearField(4);
-
-  @$pb.TagNumber(5)
-  $core.String get systemPrompt => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set systemPrompt($core.String value) => $_setString(4, value);
-  @$pb.TagNumber(5)
-  $core.bool hasSystemPrompt() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearSystemPrompt() => $_clearField(5);
-
-  @$pb.TagNumber(6)
-  $core.String get locale => $_getSZ(5);
-  @$pb.TagNumber(6)
-  set locale($core.String value) => $_setString(5, value);
-  @$pb.TagNumber(6)
-  $core.bool hasLocale() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearLocale() => $_clearField(6);
+  void clearLocale() => $_clearField(4);
 
   /// Selected reasoning variant id (empty clears it).
-  @$pb.TagNumber(7)
-  $core.String get variant => $_getSZ(6);
-  @$pb.TagNumber(7)
-  set variant($core.String value) => $_setString(6, value);
-  @$pb.TagNumber(7)
-  $core.bool hasVariant() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearVariant() => $_clearField(7);
-
-  /// Generic grouping key (empty clears it). Included for completeness; the
-  /// subsession flow sets it at creation time.
-  @$pb.TagNumber(8)
-  $core.String get group => $_getSZ(7);
-  @$pb.TagNumber(8)
-  set group($core.String value) => $_setString(7, value);
-  @$pb.TagNumber(8)
-  $core.bool hasGroup() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearGroup() => $_clearField(8);
+  @$pb.TagNumber(5)
+  $core.String get variant => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set variant($core.String value) => $_setString(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasVariant() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearVariant() => $_clearField(5);
 }
 
 class UpdateSettingsResponse extends $pb.GeneratedMessage {
@@ -7075,6 +7035,135 @@ class HealthResponse extends $pb.GeneratedMessage {
   void clearName() => $_clearField(2);
 }
 
+/// GetIdentity returns the caller's resolved identity (from its bearer token).
+/// The webui uses it to show a human username instead of the (fixed, same-
+/// origin) URL. A tenant token can only ever resolve its own identity; an admin
+/// token resolves role=admin with empty tenant fields.
+class GetIdentityRequest extends $pb.GeneratedMessage {
+  factory GetIdentityRequest() => GetIdentityRequest._();
+
+  GetIdentityRequest._();
+
+  factory GetIdentityRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      GetIdentityRequest()..mergeFromBuffer(data, registry);
+  factory GetIdentityRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      GetIdentityRequest()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetIdentityRequest',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
+      createEmptyInstance: GetIdentityRequest.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetIdentityRequest clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetIdentityRequest copyWith(void Function(GetIdentityRequest) updates) =>
+      super.copyWith((message) => updates(message as GetIdentityRequest))
+          as GetIdentityRequest;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use GetIdentityRequest() / GetIdentityRequest.new instead')
+  static GetIdentityRequest create() => GetIdentityRequest._();
+  static $pb.GeneratedMessage $_createMessage() => GetIdentityRequest._();
+  @$core.override
+  GetIdentityRequest createEmptyInstance() => GetIdentityRequest._();
+  @$core.pragma('dart2js:noInline')
+  static GetIdentityRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetIdentityRequest>(
+          GetIdentityRequest.$_createMessage);
+  static GetIdentityRequest? _defaultInstance;
+}
+
+class GetIdentityResponse extends $pb.GeneratedMessage {
+  factory GetIdentityResponse({
+    $core.String? tenant,
+    $core.String? tenantName,
+    $core.String? role,
+  }) {
+    final result = GetIdentityResponse._();
+    if (tenant != null) result.tenant = tenant;
+    if (tenantName != null) result.tenantName = tenantName;
+    if (role != null) result.role = role;
+    return result;
+  }
+
+  GetIdentityResponse._();
+
+  factory GetIdentityResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      GetIdentityResponse()..mergeFromBuffer(data, registry);
+  factory GetIdentityResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      GetIdentityResponse()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetIdentityResponse',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
+      createEmptyInstance: GetIdentityResponse.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'tenant')
+    ..aOS(2, _omitFieldNames ? '' : 'tenantName')
+    ..aOS(3, _omitFieldNames ? '' : 'role')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetIdentityResponse clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetIdentityResponse copyWith(void Function(GetIdentityResponse) updates) =>
+      super.copyWith((message) => updates(message as GetIdentityResponse))
+          as GetIdentityResponse;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core
+      .Deprecated('Use GetIdentityResponse() / GetIdentityResponse.new instead')
+  static GetIdentityResponse create() => GetIdentityResponse._();
+  static $pb.GeneratedMessage $_createMessage() => GetIdentityResponse._();
+  @$core.override
+  GetIdentityResponse createEmptyInstance() => GetIdentityResponse._();
+  @$core.pragma('dart2js:noInline')
+  static GetIdentityResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetIdentityResponse>(
+          GetIdentityResponse.$_createMessage);
+  static GetIdentityResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get tenant => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set tenant($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasTenant() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTenant() => $_clearField(1);
+
+  /// Human-readable tenant name (defaults to the id when unset).
+  @$pb.TagNumber(2)
+  $core.String get tenantName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set tenantName($core.String value) => $_setString(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasTenantName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTenantName() => $_clearField(2);
+
+  /// "tenant" | "admin".
+  @$pb.TagNumber(3)
+  $core.String get role => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set role($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasRole() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRole() => $_clearField(3);
+}
+
 /// Tenant is one isolation domain. `id` is the plaintext isolation key used on
 /// the wire (abc.<id>.<...>) and in the database.
 class Tenant extends $pb.GeneratedMessage {
@@ -8328,6 +8417,10 @@ class AgentServiceApi {
           $pb.ClientContext? ctx, HealthRequest request) =>
       _client.invoke<HealthResponse>(
           ctx, 'AgentService', 'Health', request, HealthResponse());
+  $async.Future<GetIdentityResponse> getIdentity(
+          $pb.ClientContext? ctx, GetIdentityRequest request) =>
+      _client.invoke<GetIdentityResponse>(
+          ctx, 'AgentService', 'GetIdentity', request, GetIdentityResponse());
   $async.Future<ListSessionsResponse> listSessions(
           $pb.ClientContext? ctx, ListSessionsRequest request) =>
       _client.invoke<ListSessionsResponse>(
