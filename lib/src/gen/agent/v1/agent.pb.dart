@@ -373,6 +373,7 @@ class Message extends $pb.GeneratedMessage {
     $core.String? prevId,
     $core.String? createdAt,
     $core.Iterable<Part>? parts,
+    $core.String? source,
   }) {
     final result = Message._();
     if (id != null) result.id = id;
@@ -380,6 +381,7 @@ class Message extends $pb.GeneratedMessage {
     if (prevId != null) result.prevId = prevId;
     if (createdAt != null) result.createdAt = createdAt;
     if (parts != null) result.parts.addAll(parts);
+    if (source != null) result.source = source;
     return result;
   }
 
@@ -402,6 +404,7 @@ class Message extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'createdAt')
     ..pPM<Part>(5, _omitFieldNames ? '' : 'parts',
         subBuilder: Part.$_createMessage)
+    ..aOS(6, _omitFieldNames ? '' : 'source')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -462,6 +465,22 @@ class Message extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $pb.PbList<Part> get parts => $_getList(4);
+
+  /// ORIGIN of the message, when known. Empty for assistant/system rows the
+  /// agent authored itself. A user message carries the mailbox source it was
+  /// delivered with:
+  ///   `user`               — a human prompt (HTTP Prompt route)
+  ///   `session:{session}`  — another session (subsession-create / mail-send)
+  ///   `system:{name}`      — a system/automation source
+  ///   other                — extension-defined; clients degrade gracefully
+  @$pb.TagNumber(6)
+  $core.String get source => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set source($core.String value) => $_setString(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasSource() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearSource() => $_clearField(6);
 }
 
 /// A tool/text part body. `data` is the JSON/plain payload.
@@ -580,6 +599,7 @@ class MailboxEntry extends $pb.GeneratedMessage {
     $core.String? createdAt,
     $core.String? consumedAt,
     $fixnum.Int64? seq,
+    $core.String? source,
   }) {
     final result = MailboxEntry._();
     if (id != null) result.id = id;
@@ -591,6 +611,7 @@ class MailboxEntry extends $pb.GeneratedMessage {
     if (createdAt != null) result.createdAt = createdAt;
     if (consumedAt != null) result.consumedAt = consumedAt;
     if (seq != null) result.seq = seq;
+    if (source != null) result.source = source;
     return result;
   }
 
@@ -616,6 +637,7 @@ class MailboxEntry extends $pb.GeneratedMessage {
     ..aOS(7, _omitFieldNames ? '' : 'createdAt')
     ..aOS(8, _omitFieldNames ? '' : 'consumedAt')
     ..aInt64(9, _omitFieldNames ? '' : 'seq')
+    ..aOS(10, _omitFieldNames ? '' : 'source')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -658,6 +680,8 @@ class MailboxEntry extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearSessionName() => $_clearField(2);
 
+  /// Message type: `trigger` (starts a turn), `interrupt`, or `event`
+  /// (folded into context only). Free-form on the wire.
   @$pb.TagNumber(3)
   $core.String get msgType => $_getSZ(2);
   @$pb.TagNumber(3)
@@ -720,6 +744,21 @@ class MailboxEntry extends $pb.GeneratedMessage {
   $core.bool hasSeq() => $_has(8);
   @$pb.TagNumber(9)
   void clearSeq() => $_clearField(9);
+
+  /// ORIGIN of the message, so a consumer can tell a person's prompt from
+  /// another session's hand-off or a system event. Open string:
+  ///   `user`                 — a human prompt (HTTP Prompt route)
+  ///   `session:{session}`    — another session (subsession-create / mail-send)
+  ///   `system:{name}`        — a system/automation source
+  ///   other                  — extension-defined; consumers degrade gracefully
+  @$pb.TagNumber(10)
+  $core.String get source => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set source($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(10)
+  $core.bool hasSource() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearSource() => $_clearField(10);
 }
 
 /// Preset row.
@@ -3319,12 +3358,19 @@ class StateResponse extends $pb.GeneratedMessage {
   $0.Struct ensureState() => $_ensure(0);
 }
 
+/// Mailbox listing is NEWEST-FIRST and paged BACKWARD (older) for infinite
+/// scroll: the client holds the newest page and passes the oldest entry it has
+/// as `before` to fetch the next-older page.
 class MailboxRequest extends $pb.GeneratedMessage {
   factory MailboxRequest({
     $core.String? id,
+    $core.int? limit,
+    $core.String? before,
   }) {
     final result = MailboxRequest._();
     if (id != null) result.id = id;
+    if (limit != null) result.limit = limit;
+    if (before != null) result.before = before;
     return result;
   }
 
@@ -3342,6 +3388,8 @@ class MailboxRequest extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'agent.v1'),
       createEmptyInstance: MailboxRequest.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aI(2, _omitFieldNames ? '' : 'limit')
+    ..aOS(3, _omitFieldNames ? '' : 'before')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -3374,16 +3422,39 @@ class MailboxRequest extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
   void clearId() => $_clearField(1);
+
+  /// Max entries to return (0 => server default).
+  @$pb.TagNumber(2)
+  $core.int get limit => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set limit($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasLimit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLimit() => $_clearField(2);
+
+  /// Backward cursor (exclusive): return entries OLDER than this entry id.
+  /// Empty => the newest page.
+  @$pb.TagNumber(3)
+  $core.String get before => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set before($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasBefore() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBefore() => $_clearField(3);
 }
 
 class MailboxResponse extends $pb.GeneratedMessage {
   factory MailboxResponse({
     $core.bool? ok,
     $core.Iterable<MailboxEntry>? mailbox,
+    $core.bool? hasMore,
   }) {
     final result = MailboxResponse._();
     if (ok != null) result.ok = ok;
     if (mailbox != null) result.mailbox.addAll(mailbox);
+    if (hasMore != null) result.hasMore = hasMore;
     return result;
   }
 
@@ -3403,6 +3474,7 @@ class MailboxResponse extends $pb.GeneratedMessage {
     ..aOB(1, _omitFieldNames ? '' : 'ok')
     ..pPM<MailboxEntry>(2, _omitFieldNames ? '' : 'mailbox',
         subBuilder: MailboxEntry.$_createMessage)
+    ..aOB(3, _omitFieldNames ? '' : 'hasMore')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -3438,6 +3510,16 @@ class MailboxResponse extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $pb.PbList<MailboxEntry> get mailbox => $_getList(1);
+
+  /// True when more (older) entries exist beyond this page.
+  @$pb.TagNumber(3)
+  $core.bool get hasMore => $_getBF(2);
+  @$pb.TagNumber(3)
+  set hasMore($core.bool value) => $_setBool(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasHasMore() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHasMore() => $_clearField(3);
 }
 
 class UpdateSettingsRequest extends $pb.GeneratedMessage {

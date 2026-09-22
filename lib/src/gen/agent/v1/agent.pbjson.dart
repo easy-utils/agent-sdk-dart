@@ -100,6 +100,7 @@ const Message$json = {
       '6': '.agent.v1.Part',
       '10': 'parts'
     },
+    {'1': 'source', '3': 6, '4': 1, '5': 9, '10': 'source'},
   ],
 };
 
@@ -107,7 +108,7 @@ const Message$json = {
 final $typed_data.Uint8List messageDescriptor = $convert.base64Decode(
     'CgdNZXNzYWdlEg4KAmlkGAEgASgJUgJpZBISCgRyb2xlGAIgASgJUgRyb2xlEhcKB3ByZXZfaW'
     'QYAyABKAlSBnByZXZJZBIdCgpjcmVhdGVkX2F0GAQgASgJUgljcmVhdGVkQXQSJAoFcGFydHMY'
-    'BSADKAsyDi5hZ2VudC52MS5QYXJ0UgVwYXJ0cw==');
+    'BSADKAsyDi5hZ2VudC52MS5QYXJ0UgVwYXJ0cxIWCgZzb3VyY2UYBiABKAlSBnNvdXJjZQ==');
 
 @$core.Deprecated('Use partDescriptor instead')
 const Part$json = {
@@ -139,6 +140,7 @@ const MailboxEntry$json = {
     {'1': 'created_at', '3': 7, '4': 1, '5': 9, '10': 'createdAt'},
     {'1': 'consumed_at', '3': 8, '4': 1, '5': 9, '10': 'consumedAt'},
     {'1': 'seq', '3': 9, '4': 1, '5': 3, '10': 'seq'},
+    {'1': 'source', '3': 10, '4': 1, '5': 9, '10': 'source'},
   ],
 };
 
@@ -148,7 +150,8 @@ final $typed_data.Uint8List mailboxEntryDescriptor = $convert.base64Decode(
     'Vzc2lvbk5hbWUSGQoIbXNnX3R5cGUYAyABKAlSB21zZ1R5cGUSGAoHcGF5bG9hZBgEIAEoCVIH'
     'cGF5bG9hZBIhCgxlZmZlY3RpdmVfYXQYBSABKAlSC2VmZmVjdGl2ZUF0EhYKBnN0YXR1cxgGIA'
     'EoCVIGc3RhdHVzEh0KCmNyZWF0ZWRfYXQYByABKAlSCWNyZWF0ZWRBdBIfCgtjb25zdW1lZF9h'
-    'dBgIIAEoCVIKY29uc3VtZWRBdBIQCgNzZXEYCSABKANSA3NlcQ==');
+    'dBgIIAEoCVIKY29uc3VtZWRBdBIQCgNzZXEYCSABKANSA3NlcRIWCgZzb3VyY2UYCiABKAlSBn'
+    'NvdXJjZQ==');
 
 @$core.Deprecated('Use presetDescriptor instead')
 const Preset$json = {
@@ -823,12 +826,15 @@ const MailboxRequest$json = {
   '1': 'MailboxRequest',
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'limit', '3': 2, '4': 1, '5': 5, '10': 'limit'},
+    {'1': 'before', '3': 3, '4': 1, '5': 9, '10': 'before'},
   ],
 };
 
 /// Descriptor for `MailboxRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mailboxRequestDescriptor =
-    $convert.base64Decode('Cg5NYWlsYm94UmVxdWVzdBIOCgJpZBgBIAEoCVICaWQ=');
+final $typed_data.Uint8List mailboxRequestDescriptor = $convert.base64Decode(
+    'Cg5NYWlsYm94UmVxdWVzdBIOCgJpZBgBIAEoCVICaWQSFAoFbGltaXQYAiABKAVSBWxpbWl0Eh'
+    'YKBmJlZm9yZRgDIAEoCVIGYmVmb3Jl');
 
 @$core.Deprecated('Use mailboxResponseDescriptor instead')
 const MailboxResponse$json = {
@@ -843,13 +849,14 @@ const MailboxResponse$json = {
       '6': '.agent.v1.MailboxEntry',
       '10': 'mailbox'
     },
+    {'1': 'has_more', '3': 3, '4': 1, '5': 8, '10': 'hasMore'},
   ],
 };
 
 /// Descriptor for `MailboxResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List mailboxResponseDescriptor = $convert.base64Decode(
     'Cg9NYWlsYm94UmVzcG9uc2USDgoCb2sYASABKAhSAm9rEjAKB21haWxib3gYAiADKAsyFi5hZ2'
-    'VudC52MS5NYWlsYm94RW50cnlSB21haWxib3g=');
+    'VudC52MS5NYWlsYm94RW50cnlSB21haWxib3gSGQoIaGFzX21vcmUYAyABKAhSB2hhc01vcmU=');
 
 @$core.Deprecated('Use updateSettingsRequestDescriptor instead')
 const UpdateSettingsRequest$json = {
